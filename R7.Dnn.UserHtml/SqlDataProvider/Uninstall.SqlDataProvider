@@ -1,0 +1,10 @@
+﻿-- NOTE: To manually execute this script you must 
+-- replace {databaseOwner} and {objectQualifier} with real values. 
+-- Defaults is "dbo." for database owner and "" for object qualifier 
+
+ALTER TABLE {databaseOwner}[{objectQualifier}r7_UserHtml_UserHtmls] 
+    DROP CONSTRAINT [FK_{objectQualifier}r7_UserHtml_UserHtmls]
+
+DROP INDEX {databaseOwner}[{objectQualifier}r7_UserHtml_UserHtmls].[IX_{objectQualifier}r7_UserHtml_UserHtmls_ModuleID]
+
+DROP TABLE {databaseOwner}[{objectQualifier}r7_UserHtml_UserHtmls]
