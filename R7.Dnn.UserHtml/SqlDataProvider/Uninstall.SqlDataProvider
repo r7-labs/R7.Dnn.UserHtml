@@ -2,9 +2,9 @@
 -- replace {databaseOwner} and {objectQualifier} with real values. 
 -- Defaults is "dbo." for database owner and "" for object qualifier 
 
-ALTER TABLE {databaseOwner}[{objectQualifier}r7_UserHtml_UserHtmls] 
-    DROP CONSTRAINT [FK_{objectQualifier}r7_UserHtml_UserHtmls]
+ALTER TABLE {databaseOwner}[{objectQualifier}r7_UserHtmls] 
+    DROP CONSTRAINT [FK_{objectQualifier}r7_UserHtmls]
 
-DROP INDEX {databaseOwner}[{objectQualifier}r7_UserHtml_UserHtmls].[IX_{objectQualifier}r7_UserHtml_UserHtmls_ModuleID]
+--  DROP INDEX {databaseOwner}[{objectQualifier}r7_UserHtmls].[IX_{objectQualifier}r7_UserHtmls]
 
-DROP TABLE {databaseOwner}[{objectQualifier}r7_UserHtml_UserHtmls]
+DROP TABLE {databaseOwner}[{objectQualifier}r7_UserHtmls]

@@ -20,15 +20,15 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Linq;
 using System.Web.UI.WebControls;
 using DotNetNuke.Entities.Icons;
 using DotNetNuke.Entities.Modules;
 using DotNetNuke.Entities.Modules.Actions;
+using DotNetNuke.Security;
 using DotNetNuke.Services.Exceptions;
-using R7.Dnn.Extensions.Data;
 using R7.Dnn.Extensions.ModuleExtensions;
 using R7.Dnn.Extensions.Modules;
+using R7.Dnn.UserHtml.Data;
 using R7.Dnn.UserHtml.Models;
 
 namespace R7.Dnn.UserHtml
@@ -37,7 +37,7 @@ namespace R7.Dnn.UserHtml
     {
         #region Controls
 
-        protected ListView lstContent;
+        protected Literal litUserHtml;
 
         #endregion
 
@@ -47,21 +47,34 @@ namespace R7.Dnn.UserHtml
 
             try {
                 if (!IsPostBack) {
-                    var dataProvider = new Dal2DataProvider ();
-                    var items = dataProvider.GetObjects<UserHtmlInfo> (ModuleId);
-
-                    // check if we have some content to display
-                    if (IsEditable && !items.Any ()) {
-                        this.Message ("NothingToDisplay.Text", MessageType.Info, true);
-                    } else {
-                        // bind the data
-                        lstContent.DataSource = items;
-                        lstContent.DataBind ();
+                    if (Request.IsAuthenticated) {
+                        var dataProvider = new UserHtmlDataProvider ();
+                        // TODO: Add support for userid querystring parameter?
+                        var userHtml = dataProvider.GetUserHtml (UserId, ModuleId);
+                        if (userHtml != null && !string.IsNullOrEmpty (userHtml.UserHtml)) {
+                            litUserHtml.Text = userHtml.UserHtml;
+                        }
+                        else if (IsEditable) {
+                            this.Message ("NothingToDisplay.Text", MessageType.Info, true);
+                        }
+                        else {
+                            // TODO: Display default content?
+                            HideModule ();
+                        }
+                    }
+                    else {
+                        HideModule ();
                     }
                 }
-            } catch (Exception ex) {
+            }
+            catch (Exception ex) {
                 Exceptions.ProcessModuleLoadException (this, ex);
             }
+        }
+
+        void HideModule ()
+        {
+            ContainerControl.Visible = false;
         }
 
         #region IActionable implementation
@@ -71,17 +84,29 @@ namespace R7.Dnn.UserHtml
                 var actions = new ModuleActionCollection ();
                 actions.Add (
                     GetNextActionID (),
-                    LocalizeString (ModuleActionType.AddContent),
+                    LocalizeString ("AddUserHtml.Action"),
                     ModuleActionType.AddContent,
                     "",
                     IconController.IconURL ("Add"),
                     EditUrl ("Edit"),
                     false,
-                    DotNetNuke.Security.SecurityAccessLevel.Edit,
+                    SecurityAccessLevel.Edit,
                     true,
                     false
                 );
-
+                // TODO: Remove test data
+                actions.Add (
+                    GetNextActionID (),
+                    "Edit",
+                    ModuleActionType.AddContent,
+                    "",
+                    IconController.IconURL ("Edit"),
+                    EditUrl ("user_id", "7", "Edit"),
+                    false,
+                    SecurityAccessLevel.Edit,
+                    true,
+                    false
+                );
                 return actions;
             }
         }

@@ -18,13 +18,7 @@
     <data name="ModuleHelp.Text" xml:space="preserve">
         <value></value>
     </data>
-    <data name="BasicSettings.Section" xml:space="preserve">
+    <data name="GeneralSettings.Section" xml:space="preserve">
         <value>Основные настройки</value>
-    </data>
-    <data name="lblTemplate.Text" xml:space="preserve">
-        <value>Шаблон:</value>
-    </data>
-    <data name="lblTemplate.Help" xml:space="preserve">
-        <value>Позволяет задать пользовательский шаблон для отображения элементов. Используйте следующие параметры для замены: [CONTENT] [CREATEDONDATE] [CREATEDBYUSER] [CREATEDBYUSERNAME].</value>
     </data>
 </root>

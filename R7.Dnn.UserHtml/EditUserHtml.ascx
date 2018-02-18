@@ -8,8 +8,8 @@
 <div class="dnnForm dnnClear">
     <fieldset>  
         <div class="dnnFormItem">
-            <dnn:Label id="lblContent" runat="server" ControlName="txtContent" />
-            <dnn:TextEditor id="txtContent" runat="server" Height="200" Width="100%" />
+            <div class="dnnLabel"></div>
+            <dnn:TextEditor id="textUserHtml" runat="server" />
         </div>
     </fieldset>
     <ul class="dnnActions dnnClear">

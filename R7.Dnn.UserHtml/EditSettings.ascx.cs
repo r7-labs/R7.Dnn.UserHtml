@@ -32,8 +32,6 @@ namespace R7.Dnn.UserHtml
     {
         #region Controls
 
-        protected TextBox txtTemplate;
-
         #endregion
 
         /// <summary>
@@ -43,9 +41,6 @@ namespace R7.Dnn.UserHtml
         {
             try {
                 if (!IsPostBack) {
-                    if (!string.IsNullOrWhiteSpace (Settings.Template)) {
-                        txtTemplate.Text = Settings.Template;
-                    }
                 }
             } catch (Exception ex) {
                 Exceptions.ProcessModuleLoadException (this, ex);
@@ -58,8 +53,6 @@ namespace R7.Dnn.UserHtml
         public override void UpdateSettings ()
         {
             try {
-                Settings.Template = txtTemplate.Text;
-
                 SettingsRepository.SaveSettings (ModuleConfiguration, Settings);
                 ModuleController.SynchronizeModule (ModuleId);
             } catch (Exception ex) {

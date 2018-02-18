@@ -2,21 +2,27 @@
 -- replace {databaseOwner} and {objectQualifier} with real values. 
 -- Defaults is "dbo." for database owner and "" for object qualifier 
 
-IF NOT EXISTS (select * from sys.objects where object_id = object_id (N'{databaseOwner}[{objectQualifier}r7_UserHtml_UserHtmls]') and type in (N'U'))
+IF NOT EXISTS (select * from sys.objects where object_id = object_id (N'{databaseOwner}[{objectQualifier}r7_UserHtmls]') and type in (N'U'))
 BEGIN
-    CREATE TABLE {databaseOwner}[{objectQualifier}r7_UserHtml_UserHtmls]
+    CREATE TABLE {databaseOwner}[{objectQualifier}r7_UserHtmls]
     (
-        [UserHtmlID] int NOT NULL IDENTITY (1, 1),
+        UserHtmlID int NOT NULL IDENTITY (1, 1),
         ModuleID int NOT NULL,
-        Content nvarchar(max) NOT NULL,
+        UserID int NOT NULL,
+        UserHtml nvarchar(max) NOT NULL,
         CreatedByUserID int NOT NULL,
-        CreatedOnDate datetime NOT NULL DEFAULT (GETDATE ())
-        CONSTRAINT [PK_{objectQualifier}r7_UserHtml_UserHtmls] PRIMARY KEY ([UserHtmlID])
-        CONSTRAINT [FK_{objectQualifier}r7_UserHtml_UserHtmls_Modules] FOREIGN KEY (ModuleID)
-            REFERENCES {databaseOwner}[{objectQualifier}Modules] (ModuleID) ON DELETE CASCADE
+        LastModifiedByUserID int NOT NULL,
+        CreatedOnDate datetime NOT NULL,
+        LastModifiedOnDate datetime NOT NULL
+        CONSTRAINT [PK_{objectQualifier}r7_UserHtmls] PRIMARY KEY ([UserHtmlID])
+        CONSTRAINT [FK_{objectQualifier}r7_UserHtmls_Modules] FOREIGN KEY (ModuleID)
+            REFERENCES {databaseOwner}[{objectQualifier}Modules] (ModuleID) ON DELETE CASCADE,
+        CONSTRAINT [FK_{objectQualifier}r7_UserHtmls_Users] FOREIGN KEY (UserID)
+            REFERENCES {databaseOwner}[{objectQualifier}Users] (UserID) ON DELETE CASCADE,
+        CONSTRAINT [UN_{objectQualifier}r7_UserHtmls] UNIQUE (ModuleID, UserID)
     )
 
-    CREATE NONCLUSTERED INDEX [IX_{objectQualifier}r7_UserHtml_UserHtmls_ModuleID]
-        ON {databaseOwner}[{objectQualifier}r7_UserHtml_UserHtmls] (ModuleID)
+    -- CREATE NONCLUSTERED INDEX [IX_{objectQualifier}r7_UserHtmls]
+    --     ON {databaseOwner}[{objectQualifier}r7_UserHtmls] (ModuleID, UserID)
 END
 GO

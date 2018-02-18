@@ -18,13 +18,7 @@
     <data name="ModuleHelp.Text" xml:space="preserve">
         <value></value>
     </data>
-    <data name="BasicSettings.Section" xml:space="preserve">
-        <value>Basic Settings</value>
-    </data>
-    <data name="lblTemplate.Text" xml:space="preserve">
-        <value>Template:</value>
-    </data>
-    <data name="lblTemplate.Help" xml:space="preserve">
-        <value>Allows you to provide a custom template for displaying the items. Use parameters for dynamic substitution: [CONTENT] [CREATEDONDATE] [CREATEDBYUSER] [CREATEDBYUSERNAME].</value>
+    <data name="GeneralSettings.Section" xml:space="preserve">
+        <value>General Settings</value>
     </data>
 </root>

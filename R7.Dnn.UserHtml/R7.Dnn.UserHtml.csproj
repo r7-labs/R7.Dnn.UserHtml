@@ -111,6 +111,7 @@
     <Compile Include="EditSettings.ascx.cs">
       <DependentUpon>EditUserHtmlSettings.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Data\UserHtmlDataProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="module.css" />
@@ -132,7 +133,9 @@
     <None Include="App_LocalResources\EditUserHtmlSettings.ascx.resx" />
     <None Include="App_LocalResources\EditUserHtmlSettings.ascx.ru-RU.resx" />
     <None Include="R7.Dnn.UserHtml.dnn" />
-    <None Include="SETUP.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Data\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

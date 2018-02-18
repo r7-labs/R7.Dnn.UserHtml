@@ -23,10 +23,11 @@ using System;
 using System.Web.UI.WebControls;
 using DotNetNuke.Common;
 using DotNetNuke.Entities.Modules;
+using DotNetNuke.Entities.Users;
 using DotNetNuke.Services.Exceptions;
-using DotNetNuke.Services.Localization;
 using DotNetNuke.UI.UserControls;
-using R7.Dnn.Extensions.Data;
+using R7.Dnn.Extensions.Utilities;
+using R7.Dnn.UserHtml.Data;
 using R7.Dnn.UserHtml.Models;
 
 namespace R7.Dnn.UserHtml
@@ -38,12 +39,10 @@ namespace R7.Dnn.UserHtml
         protected LinkButton buttonUpdate;
         protected LinkButton buttonDelete;
         protected HyperLink linkCancel;
-        protected TextEditor txtContent;
+        protected TextEditor textUserHtml;
         protected ModuleAuditControl ctlAudit;
 
         #endregion
-
-        private int? itemId = null;
 
         #region Handlers
 
@@ -59,7 +58,12 @@ namespace R7.Dnn.UserHtml
             linkCancel.NavigateUrl = Globals.NavigateURL ();
 
             // add confirmation dialog to delete button
-            buttonDelete.Attributes.Add ("onClick", "javascript:return confirm('" + Localization.GetString ("DeleteItem") + "');");
+            buttonDelete.Attributes.Add ("onClick", "javascript:return confirm('" + LocalizeString ("DeleteItem") + "');");
+        }
+
+        int? GetUserId ()
+        {
+            return TypeUtils.ParseToNullable<int> (Request.QueryString ["user_id"]);
         }
 
         /// <summary>
@@ -71,32 +75,33 @@ namespace R7.Dnn.UserHtml
             base.OnLoad (e);
 
             try {
-                // parse querystring parameters
-                int tmpItemId;
-                if (int.TryParse (Request.QueryString ["UserHtmlId"], out tmpItemId))
-                    itemId = tmpItemId;
+                var userId = GetUserId ();
 
                 if (!IsPostBack) {
                     // load the data into the control the first time we hit this page
 
                     // check we have an item to lookup
                     // ALT: if (!Null.IsNull (itemId) 
-                    if (itemId.HasValue) {
+                    if (userId != null) {
                         // load the item
-                        var dataProvider = new Dal2DataProvider ();
-                        var item = dataProvider.Get<UserHtmlInfo> (itemId.Value, ModuleId);
-
+                        var dataProvider = new UserHtmlDataProvider ();
+                        var item = dataProvider.GetUserHtml (userId.Value, ModuleId);
                         if (item != null) {
-                            // TODO: Fill controls with data
-                            txtContent.Text = item.Content;
+                            
+                            textUserHtml.Text = item.UserHtml;
 
                             // setup audit control
-                            ctlAudit.CreatedByUser = item.CreatedByUserName;
+                            ctlAudit.CreatedByUser = UserController.Instance.GetUserById (PortalId, item.CreatedByUserId)?.DisplayName
+                                ?? LocalizeString ("UnknownUser.Text");
                             ctlAudit.CreatedDate = item.CreatedOnDate.ToLongDateString ();
-                        } else {
-                            Response.Redirect (Globals.NavigateURL (), true);
                         }
-                    } else {
+                        else {
+                            buttonDelete.Visible = false;
+                            ctlAudit.Visible = false;
+                            // Response.Redirect (Globals.NavigateURL (), true);
+                        }
+                    }
+                    else {
                         buttonDelete.Visible = false;
                         ctlAudit.Visible = false;
                     }
@@ -118,36 +123,43 @@ namespace R7.Dnn.UserHtml
         protected void buttonUpdate_Click (object sender, EventArgs e)
         {
             try {
-                var dataProvider = new Dal2DataProvider ();
-                UserHtmlInfo item;
+                var userId = GetUserId ();
+                if (userId != null) {
+                    var dataProvider = new UserHtmlDataProvider ();
+                    var item = dataProvider.GetUserHtml (userId.Value, ModuleId);
+                    var isNewItem = (item == null);
 
-                // determine if we are adding or updating
-                // ALT: if (Null.IsNull (itemId))
-                if (!itemId.HasValue) {
-                    // TODO: populate new object properties with data from controls 
-                    // to add new record
-                    item = new UserHtmlInfo ();
-                } else {
-                    // TODO: update properties of existing object with data from controls 
-                    // to update existing record
-                    item = dataProvider.Get<UserHtmlInfo> (itemId.Value, ModuleId);
+                    // determine if we are adding or updating
+                    // ALT: if (Null.IsNull (itemId))
+                    if (isNewItem) {
+                        item = new UserHtmlInfo ();
+                    }
+
+                    // fill the object
+                    item.UserHtml = textUserHtml.Text;
+                    item.ModuleId = ModuleId;
+                    item.UserId = userId.Value;
+
+                    var now = DateTime.Now;
+                    if (isNewItem) {
+                        item.CreatedByUserId = UserId;
+                        item.CreatedOnDate = now;
+                    }
+                    item.LastModifiedByUserId = UserId;
+                    item.LastModifiedOnDate = now;
+
+                    if (isNewItem) {
+                        dataProvider.Add (item);
+                    }
+                    else {
+                        dataProvider.Update (item);
+                    }
+
+                    ModuleController.SynchronizeModule (ModuleId);
+                    Response.Redirect (Globals.NavigateURL (), true);
                 }
-
-                // fill the object
-                item.Content = txtContent.Text;
-                item.ModuleId = ModuleId;
-
-                if (!itemId.HasValue) {
-                    item.CreatedByUserId = UserId;
-                    dataProvider.Add<UserHtmlInfo> (item);
-                } else {
-                    dataProvider.Update<UserHtmlInfo> (item);
-                }
-
-                ModuleController.SynchronizeModule (ModuleId);
-                Response.Redirect (Globals.NavigateURL (), true);
-
-            } catch (Exception ex) {
+            }
+            catch (Exception ex) {
                 Exceptions.ProcessModuleLoadException (this, ex);
             }
         }
@@ -164,12 +176,17 @@ namespace R7.Dnn.UserHtml
         protected void buttonDelete_Click (object sender, EventArgs e)
         {
             try {
-                if (itemId.HasValue) {
-                    var dataProvider = new Dal2DataProvider ();
-                    dataProvider.Delete<UserHtmlInfo> (itemId.Value);
-                    Response.Redirect (Globals.NavigateURL (), true);
+                var userId = GetUserId ();
+                if (userId != null) {
+                    var dataProvider = new UserHtmlDataProvider ();
+                    var item = dataProvider.GetUserHtml (userId.Value, ModuleId);
+                    if (item != null) {
+                        dataProvider.Delete (item);
+                        Response.Redirect (Globals.NavigateURL (), true);
+                    }
                 }
-            } catch (Exception ex) {
+            }
+            catch (Exception ex) {
                 Exceptions.ProcessModuleLoadException (this, ex);
             }
         }

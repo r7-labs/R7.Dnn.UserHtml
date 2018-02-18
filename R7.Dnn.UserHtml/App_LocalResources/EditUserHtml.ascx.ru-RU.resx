@@ -18,13 +18,7 @@
     <data name="ModuleHelp.Text" xml:space="preserve">
         <value></value>
     </data>
-    <data name="lblContent.Text" xml:space="preserve">
-        <value>Содержимое:</value>
-    </data>
-    <data name="lblContent.Help" xml:space="preserve">
-        <value>Введите содержимое.</value>
-    </data>
-    <data name="valContent.ErrorMessage" xml:space="preserve">
-        <value>Содержимое обязательно!</value>
+	<data name="UnknownUser.Text" xml:space="preserve">
+        <value>Неизвестный пользователь</value>
     </data>
 </root>

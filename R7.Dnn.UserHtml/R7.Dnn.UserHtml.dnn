@@ -3,11 +3,11 @@
     <packages>
         <package name="R7.Dnn.UserHtml" type="Module" version="00.01.00">
             <friendlyName>R7.Dnn.UserHtml</friendlyName>
-            <description>This is a simple DNN WebForms module which shows list of records from database table.</description>
+            <description>A module to display HTML content associated with a specific user.</description>
             <owner>
                 <name>Roman M. Yagodin</name>
-                <organization>r7</organization>
-                <url />
+                <organization>R7.Labs</organization>
+                <url>https://github.com/volgau/R7.Dnn.UserHtml</url>
                 <email>roman.yagodin@gmail.com</email>
             </owner>
             <license src="license.htm" />
@@ -22,10 +22,7 @@
                         <moduleName>R7.Dnn.UserHtml</moduleName>
                         <foldername>R7.Dnn.UserHtml/R7.Dnn.UserHtml</foldername>
                         <businessControllerClass>R7.Dnn.UserHtml.Components.UserHtmlController</businessControllerClass>
-                        <supportedFeatures>
-                            <supportedFeature type="Portable" />
-                            <supportedFeature type="Searchable" />
-                        </supportedFeatures>
+                        <supportedFeatures />
                         <moduleDefinitions>
                             <moduleDefinition>
                                 <friendlyName>User HTML</friendlyName>
@@ -34,7 +31,7 @@
                                 <moduleControls>
                                     <moduleControl>
                                         <controlKey />
-                                        <controlSrc>DesktopModules/R7.Dnn.UserHtml/R7.Dnn.UserHtml/View.ascx</controlSrc>
+                                        <controlSrc>DesktopModules/R7.Dnn.UserHtml/R7.Dnn.UserHtml/ViewUserHtml.ascx</controlSrc>
                                         <controlTitle />
                                         <controlType>View</controlType>
                                         <iconFile />
