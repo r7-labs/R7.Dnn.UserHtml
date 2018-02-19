@@ -15,8 +15,8 @@
     	<div class="form-group">
             <label for="<%= selUser.ClientID %>"><%= LocalizeString ("lblUser.Text") %></label>
     		<asp:DropDownList id="selUser" runat="server" CssClass="form-control"
-    			DataTextField="DisplayName"
-    			DataValueField="UserID"
+    			DataTextField="UserString"
+    			DataValueField="UserId"
     		    AutoPostBack="true"
     		    OnSelectedIndexChanged="selUser_SelectedIndexChanged" />
     	</div>

@@ -33,6 +33,7 @@ using DotNetNuke.Services.Exceptions;
 using R7.Dnn.Extensions.Modules;
 using R7.Dnn.UserHtml.Data;
 using R7.Dnn.UserHtml.Models;
+using R7.Dnn.UserHtml.ViewModels;
 
 namespace R7.Dnn.UserHtml
 {
@@ -127,7 +128,8 @@ namespace R7.Dnn.UserHtml
             if (users != null && users.Any ()) {
                 pnlSelectUser.Visible = true;
                 lblSearchResult.Text = string.Format (LocalizeString ("UsersFound_Format.Text"), users.Count ());
-                selUser.DataSource = users;
+                selUser.DataSource = users.OrderBy (u => u.DisplayName)
+                                          .Select (u => new UserViewModel (u));
                 selUser.DataBind ();
                 selUser_SelectedIndexChanged (selUser, new EventArgs ());
             }
