@@ -15,7 +15,7 @@
     <data name="ModuleHelp.Text" xml:space="preserve">
         <value></value>
     </data>
-    <data name="AddUserHtml.Action" xml:space="preserve">
+    <data name="AddUserHtml_Action.Text" xml:space="preserve">
         <value>Добавить HTML</value>
     </data>
     <data name="DefaultContent.Text" xml:space="preserve">
@@ -23,5 +23,23 @@
     </data>
     <data name="NothingToDisplay.Text" xml:space="preserve">
         <value>Нечего отображать, добавьте элементы.</value>
+    </data>
+    <data name="lblSearchUser.Text" xml:space="preserve">
+        <value>Найти пользователя:</value>
+    </data>
+    <data name="lblUser.Text" xml:space="preserve">
+        <value>Пользователь:</value>
+    </data>
+    <data name="btnSearchUser.Text" xml:space="preserve">
+        <value>Найти</value>
+    </data>
+    <data name="lnkEditUserHtml.Text" xml:space="preserve">
+        <value>Редактировать HTML</value>
+    </data>
+	<data name="UsersFound_Format.Text" xml:space="preserve">
+        <value>Найдено {0} пользователей.</value>
+    </data>
+	<data name="NoUsersFound.Text" xml:space="preserve">
+        <value>Пользователи не найдены.</value>
     </data>
 </root>

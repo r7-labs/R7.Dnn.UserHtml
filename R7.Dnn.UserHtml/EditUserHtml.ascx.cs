@@ -156,6 +156,8 @@ namespace R7.Dnn.UserHtml
                     }
 
                     ModuleController.SynchronizeModule (ModuleId);
+
+                    // TODO: Add support for returnurl?
                     Response.Redirect (Globals.NavigateURL (), true);
                 }
             }
