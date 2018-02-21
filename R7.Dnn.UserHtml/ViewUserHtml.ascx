@@ -27,7 +27,8 @@
                 <span class="fa fa-edit"></span> <%= LocalizeString ("lnkEditUserHtml.Text") %>
             </asp:HyperLink>
         </div>
-	</asp:Panel>	
+	</asp:Panel>
+	<hr />
 </asp:Panel>
 <asp:Panel id="pnlUserHtml" runat="server">
     <asp:Literal id="litUserHtml" runat="server" />

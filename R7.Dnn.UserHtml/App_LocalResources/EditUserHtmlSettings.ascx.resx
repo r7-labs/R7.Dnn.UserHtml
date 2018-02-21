@@ -21,4 +21,10 @@
     <data name="GeneralSettings.Section" xml:space="preserve">
         <value>General Settings</value>
     </data>
+	<data name="lblDefaultHtml.Text" xml:space="preserve">
+        <value>Default HTML Content:</value>
+    </data>
+	<data name="lblDefaultHtml.Help" xml:space="preserve">
+        <value>Enter the content in HTML format to show in case if no HTML content is available for the user.</value>
+    </data>
 </root>

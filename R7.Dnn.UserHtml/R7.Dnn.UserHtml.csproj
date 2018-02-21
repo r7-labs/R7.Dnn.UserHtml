@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -118,11 +117,11 @@
     <Content Include="module.css" />
     <Content Include="admin.css" />
     <Content Include="ViewUserHtml.ascx" />
+    <Content Include="packages.config" />
     <Content Include="EditUserHtml.ascx" />
     <Content Include="EditUserHtmlSettings.ascx" />
     <Content Include="license.htm" />
     <Content Include="releaseNotes.htm" />
-    <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SqlDataProvider\00.01.00.SqlDataProvider" />

@@ -25,6 +25,8 @@
 // THE SOFTWARE.
 
 using System;
+using System.Web;
+using System.Web.UI.WebControls;
 using DotNetNuke.Entities.Modules;
 using DotNetNuke.Services.Exceptions;
 using R7.Dnn.Extensions.Modules;
@@ -36,6 +38,8 @@ namespace R7.Dnn.UserHtml
     {
         #region Controls
 
+        protected TextBox txtDefaultHtml;
+
         #endregion
 
         /// <summary>
@@ -45,6 +49,7 @@ namespace R7.Dnn.UserHtml
         {
             try {
                 if (!IsPostBack) {
+                    txtDefaultHtml.Text = HttpUtility.HtmlDecode (Settings.DefaultHtml);
                 }
             } catch (Exception ex) {
                 Exceptions.ProcessModuleLoadException (this, ex);
@@ -57,6 +62,8 @@ namespace R7.Dnn.UserHtml
         public override void UpdateSettings ()
         {
             try {
+                Settings.DefaultHtml = HttpUtility.HtmlEncode (txtDefaultHtml.Text);
+
                 SettingsRepository.SaveSettings (ModuleConfiguration, Settings);
                 ModuleController.SynchronizeModule (ModuleId);
             } catch (Exception ex) {

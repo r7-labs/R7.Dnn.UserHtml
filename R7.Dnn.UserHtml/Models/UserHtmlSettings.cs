@@ -33,5 +33,7 @@ namespace R7.Dnn.UserHtml.Models
     /// </summary>
     public class UserHtmlSettings
     {
+        [ModuleSetting (Prefix = "UserHtml_")]
+        public string DefaultHtml { get; set; }
     }
 }
