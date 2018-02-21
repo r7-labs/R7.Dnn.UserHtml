@@ -65,6 +65,8 @@ namespace R7.Dnn.UserHtml
 
             pnlUser.Visible = false;
             pnlSelectUser.Visible = false;
+
+            txtSearchUser.Attributes.Add ("placeholder", LocalizeString ("txtSearchUser_Placeholder.Text"));
         }
 
         protected override void OnLoad (EventArgs e)
