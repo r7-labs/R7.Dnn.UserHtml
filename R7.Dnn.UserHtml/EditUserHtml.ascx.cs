@@ -33,13 +33,14 @@ using DotNetNuke.Entities.Users;
 using DotNetNuke.Framework;
 using DotNetNuke.Services.Exceptions;
 using DotNetNuke.UI.UserControls;
+using R7.Dnn.Extensions.Modules;
 using R7.Dnn.Extensions.Utilities;
 using R7.Dnn.UserHtml.Data;
 using R7.Dnn.UserHtml.Models;
 
 namespace R7.Dnn.UserHtml
 {
-    public class EditUserHtml : PortalModuleBase
+    public class EditUserHtml : PortalModuleBase<UserHtmlSettings>
     {
         #region Controls
 
@@ -103,8 +104,7 @@ namespace R7.Dnn.UserHtml
                             ctlAudit.CreatedDate = item.CreatedOnDate.ToLongDateString ();
                         }
                         else {
-                            buttonDelete.Visible = false;
-                            ctlAudit.Visible = false;
+                            LoadNewItem ();
                         }
 
                         var user = UserController.GetUserById (PortalId, userId.Value);
@@ -116,14 +116,21 @@ namespace R7.Dnn.UserHtml
                         }
                     }
                     else {
-                        buttonDelete.Visible = false;
-                        ctlAudit.Visible = false;
+                        LoadNewItem ();
                     }
                 }
             }
             catch (Exception ex) {
                 Exceptions.ProcessModuleLoadException (this, ex);
             }
+        }
+
+        void LoadNewItem ()
+        {
+            textUserHtml.Text = Settings.DefaultHtml;
+
+            buttonDelete.Visible = false;
+            ctlAudit.Visible = false;
         }
 
         void AppendToPageTitle (string addition)

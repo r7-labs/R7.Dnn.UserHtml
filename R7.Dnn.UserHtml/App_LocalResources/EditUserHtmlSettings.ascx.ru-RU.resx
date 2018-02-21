@@ -27,4 +27,10 @@
     <data name="lblEmptyHtml.Help" xml:space="preserve">
         <value>Введите содержимое в формате HTML, которое будет отображаться, если содержимое HTML для пользователя не задано или пусто.</value>
     </data>
+    <data name="lblDefaultHtml.Text" xml:space="preserve">
+        <value>Содержимое HTML по-умолчанию:</value>
+    </data>
+    <data name="lblDefaultHtml.Help" xml:space="preserve">
+        <value>Введите содержимое в формате HTML которое будет добавляться в окно редактора HTML при создании новых записей.</value>
+    </data>
 </root>

@@ -27,4 +27,10 @@
 	<data name="lblEmptyHtml.Help" xml:space="preserve">
         <value>Enter the content in HTML format to show in case if HTML content for the user is not defined or empty.</value>
     </data>
+    <data name="lblDefaultHtml.Text" xml:space="preserve">
+        <value>Default HTML Content:</value>
+    </data>
+    <data name="lblDefaultHtml.Help" xml:space="preserve">
+        <value>Enter the content in HTML format that will be added to the HTML editor window when new records are created.</value>
+    </data>
 </root>
