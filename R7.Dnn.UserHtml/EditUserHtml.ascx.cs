@@ -27,8 +27,10 @@
 using System;
 using System.Web.UI.WebControls;
 using DotNetNuke.Common;
+using DotNetNuke.Common.Utilities;
 using DotNetNuke.Entities.Modules;
 using DotNetNuke.Entities.Users;
+using DotNetNuke.Framework;
 using DotNetNuke.Services.Exceptions;
 using DotNetNuke.UI.UserControls;
 using R7.Dnn.Extensions.Utilities;
@@ -103,7 +105,14 @@ namespace R7.Dnn.UserHtml
                         else {
                             buttonDelete.Visible = false;
                             ctlAudit.Visible = false;
-                            // Response.Redirect (Globals.NavigateURL (), true);
+                        }
+
+                        var user = UserController.GetUserById (PortalId, userId.Value);
+                        if (user != null) {
+                            AppendToPageTitle (user.DisplayName);
+                        }
+                        else {
+                            throw (new Exception ($"User with UserId={userId.Value} doesn't exists"));
                         }
                     }
                     else {
@@ -111,9 +120,15 @@ namespace R7.Dnn.UserHtml
                         ctlAudit.Visible = false;
                     }
                 }
-            } catch (Exception ex) {
+            }
+            catch (Exception ex) {
                 Exceptions.ProcessModuleLoadException (this, ex);
             }
+        }
+
+        void AppendToPageTitle (string addition)
+        {
+            ((CDefault) Page).Title = ((CDefault) Page).Title.Append (addition, " &gt; ");
         }
 
         /// <summary>
