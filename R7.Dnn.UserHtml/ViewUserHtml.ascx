@@ -6,7 +6,9 @@
 		    <asp:TextBox id="txtSearchUser" runat="server" CssClass="form-control" MaxLength="255" />
 			<div class="input-group-append">
 		        <asp:LinkButton id="btnSearchUser" runat="server" role="button" CssClass="btn btn-primary"
-		            OnClick="btnSearchUser_Click"><%= LocalizeString ("btnSearchUser.Text") %></asp:LinkButton>
+		                OnClick="btnSearchUser_Click">
+					<span class="fa fa-search"></span> <%= LocalizeString ("btnSearchUser.Text") %>
+				</asp:LinkButton>
 			</div>
 		</div>
         <asp:Label id="lblSearchResult" runat="server" CssClass="small" />
@@ -29,4 +31,4 @@
 </asp:Panel>
 <asp:Panel id="pnlUserHtml" runat="server">
     <asp:Literal id="litUserHtml" runat="server" />
-</asp:Panel>	
+</asp:Panel>
