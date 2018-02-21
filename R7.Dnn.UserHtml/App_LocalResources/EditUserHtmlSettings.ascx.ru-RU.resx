@@ -21,10 +21,10 @@
     <data name="GeneralSettings.Section" xml:space="preserve">
         <value>Основные настройки</value>
     </data>
-	<data name="lblDefaultHtml.Text" xml:space="preserve">
-        <value>Содержимое HTML по-умолчанию:</value>
+	<data name="lblEmptyHtml.Text" xml:space="preserve">
+        <value>Заменитель отсутствующего содержимого HTML:</value>
     </data>
-    <data name="lblDefaultHtml.Help" xml:space="preserve">
-        <value>Введите содержимое в формате HTML, которое будет отображаться, если содержимое HTML для пользователя не задано.</value>
+    <data name="lblEmptyHtml.Help" xml:space="preserve">
+        <value>Введите содержимое в формате HTML, которое будет отображаться, если содержимое HTML для пользователя не задано или пусто.</value>
     </data>
 </root>

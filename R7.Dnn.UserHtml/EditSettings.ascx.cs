@@ -38,7 +38,7 @@ namespace R7.Dnn.UserHtml
     {
         #region Controls
 
-        protected TextBox txtDefaultHtml;
+        protected TextBox txtEmptyHtml;
 
         #endregion
 
@@ -49,7 +49,7 @@ namespace R7.Dnn.UserHtml
         {
             try {
                 if (!IsPostBack) {
-                    txtDefaultHtml.Text = HttpUtility.HtmlDecode (Settings.DefaultHtml);
+                    txtEmptyHtml.Text = HttpUtility.HtmlDecode (Settings.EmptyHtml);
                 }
             } catch (Exception ex) {
                 Exceptions.ProcessModuleLoadException (this, ex);
@@ -62,7 +62,7 @@ namespace R7.Dnn.UserHtml
         public override void UpdateSettings ()
         {
             try {
-                Settings.DefaultHtml = HttpUtility.HtmlEncode (txtDefaultHtml.Text);
+                Settings.EmptyHtml = HttpUtility.HtmlEncode (txtEmptyHtml.Text);
 
                 SettingsRepository.SaveSettings (ModuleConfiguration, Settings);
                 ModuleController.SynchronizeModule (ModuleId);

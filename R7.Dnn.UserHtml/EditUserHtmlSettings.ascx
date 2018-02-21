@@ -7,8 +7,8 @@
     <h2 class="dnnFormSectionHead"><a href="#"><asp:Label runat="server" ResourceKey="GeneralSettings.Section" /></a></h2>
     <fieldset>  
         <div class="dnnFormItem">
-			<dnn:Label id="lblDefaultHtml" runat="server" ControlName="txtDefaultHtml" />
-            <asp:TextBox id="txtDefaultHtml" runat="server" TextMode="MultiLine" />
+			<dnn:Label id="lblEmptyHtml" runat="server" ControlName="txtEmptyHtml" />
+            <asp:TextBox id="txtEmptyHtml" runat="server" TextMode="MultiLine" />
         </div>
     </fieldset> 
 </div>

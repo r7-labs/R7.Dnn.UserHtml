@@ -111,7 +111,7 @@ namespace R7.Dnn.UserHtml
                 litUserHtml.Text = HttpUtility.HtmlDecode (userHtml.UserHtml);
             }
             else {
-                litUserHtml.Text = HttpUtility.HtmlDecode (Settings.DefaultHtml);
+                litUserHtml.Text = HttpUtility.HtmlDecode (Settings.EmptyHtml);
             }
         }
 

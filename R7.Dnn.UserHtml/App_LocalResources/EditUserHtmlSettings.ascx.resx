@@ -21,10 +21,10 @@
     <data name="GeneralSettings.Section" xml:space="preserve">
         <value>General Settings</value>
     </data>
-	<data name="lblDefaultHtml.Text" xml:space="preserve">
-        <value>Default HTML Content:</value>
+	<data name="lblEmptyHtml.Text" xml:space="preserve">
+        <value>Empty HTML Content Placeholder:</value>
     </data>
-	<data name="lblDefaultHtml.Help" xml:space="preserve">
-        <value>Enter the content in HTML format to show in case if no HTML content is available for the user.</value>
+	<data name="lblEmptyHtml.Help" xml:space="preserve">
+        <value>Enter the content in HTML format to show in case if HTML content for the user is not defined or empty.</value>
     </data>
 </root>
