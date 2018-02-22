@@ -39,13 +39,16 @@ namespace R7.Dnn.UserHtml.Components
 
             return UserController.GetUsers (false, false, portalId)
                                  .Cast<UserInfo> ()
-                                 .Where (u =>
-                                         (u.Email != null && u.Email.ToLower ().Contains (searchTextLC)) ||
-                                         (u.Username != null && u.Username.ToLower ().Contains (searchTextLC)) ||
-                                         (u.DisplayName != null && u.DisplayName.ToLower ().Contains (searchTextLC)) ||
-                                         (u.LastName != null && u.LastName.ToLower ().Contains (searchTextLC)) ||
-                                         (u.FirstName != null && u.FirstName.ToLower ().Contains (searchTextLC))
-                                        );
+                                 .Where (u => Contains (u.Email, searchTextLC) ||
+                                         Contains (u.Username, searchTextLC) ||
+                                         Contains (u.DisplayName, searchTextLC) ||
+                                         Contains (u.LastName, searchTextLC) ||
+                                         Contains (u.FirstName, searchTextLC));
+        }
+
+        bool Contains (string text, string searchTextLC)
+        {
+            return text != null && text.ToLower ().Contains (searchTextLC);
         }
     }
 }
