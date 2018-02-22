@@ -27,12 +27,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using DotNetNuke.Entities.Users;
+using R7.Dnn.Extensions.Utilities;
 
 namespace R7.Dnn.UserHtml.Components
 {
     public class UserFinder
     {
-        // TODO: Also search by FirstName/LastName combinations
         public IEnumerable<UserInfo> FindUsers (string searchText, int portalId)
         {
             var searchTextLC = searchText.ToLower ();
@@ -40,10 +40,14 @@ namespace R7.Dnn.UserHtml.Components
             return UserController.GetUsers (false, false, portalId)
                                  .Cast<UserInfo> ()
                                  .Where (u => Contains (u.Email, searchTextLC) ||
-                                         Contains (u.Username, searchTextLC) ||
-                                         Contains (u.DisplayName, searchTextLC) ||
-                                         Contains (u.LastName, searchTextLC) ||
-                                         Contains (u.FirstName, searchTextLC));
+                                    Contains (u.Username, searchTextLC) ||
+                                    Contains (u.DisplayName, searchTextLC) ||
+                                    Contains (u.LastName, searchTextLC) ||
+                                    Contains (u.FirstName, searchTextLC) ||
+                                    Contains (TextUtils.FormatList (" ", u.FirstName, u.LastName),
+                                              searchTextLC) ||
+                                    Contains (TextUtils.FormatList (" ", u.LastName, u.FirstName),
+                                              searchTextLC));
         }
 
         bool Contains (string text, string searchTextLC)
