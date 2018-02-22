@@ -25,19 +25,18 @@
 // THE SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI.WebControls;
 using DotNetNuke.Entities.Icons;
 using DotNetNuke.Entities.Modules;
 using DotNetNuke.Entities.Modules.Actions;
-using DotNetNuke.Entities.Users;
 using DotNetNuke.Security;
 using DotNetNuke.Services.Exceptions;
 using R7.Dnn.Extensions.ControlExtensions;
 using R7.Dnn.Extensions.Modules;
 using R7.Dnn.Extensions.Utilities;
+using R7.Dnn.UserHtml.Components;
 using R7.Dnn.UserHtml.Data;
 using R7.Dnn.UserHtml.Models;
 using R7.Dnn.UserHtml.ViewModels;
@@ -204,7 +203,7 @@ namespace R7.Dnn.UserHtml
 
         void btnSearchUser_Click_Internal (string searchText, bool selectFirst)
         {
-            var users = SearchUsers (searchText);
+            var users = new UserFinder ().FindUsers (searchText, PortalId);
             if (users != null && users.Any ()) {
                 pnlSelectUser.Visible = true;
                 lblSearchResult.Text = string.Format (LocalizeString ("UsersFound_Format.Text"), users.Count ());
@@ -222,24 +221,6 @@ namespace R7.Dnn.UserHtml
                 pnlSelectUser.Visible = false;
                 lblSearchResult.Text = LocalizeString ("NoUsersFound.Text");
             }
-        }
-
-        // TODO: Move to BLL
-        // TODO: Rename to FindUsers
-        // TODO: Also search by FirstName/LastName combinations
-        IEnumerable<UserInfo> SearchUsers (string searchText)
-        {
-            var searchTextLC = searchText.ToLower ();
-
-            return UserController.GetUsers (false, false, PortalId)
-                                 .Cast<UserInfo> ()
-                                 .Where (u =>
-                                         (u.Email != null && u.Email.ToLower ().Contains (searchTextLC)) ||
-                                         (u.Username != null && u.Username.ToLower ().Contains (searchTextLC)) ||
-                                         (u.DisplayName != null && u.DisplayName.ToLower ().Contains (searchTextLC)) ||
-                                         (u.LastName != null && u.LastName.ToLower ().Contains (searchTextLC)) ||
-                                         (u.FirstName != null && u.FirstName.ToLower ().Contains (searchTextLC))
-                                        );
         }
 
         protected void selUser_SelectedIndexChanged (object sender, EventArgs e)
