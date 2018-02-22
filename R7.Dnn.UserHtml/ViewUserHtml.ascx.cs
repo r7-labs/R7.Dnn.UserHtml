@@ -35,11 +35,12 @@ using DotNetNuke.Entities.Modules.Actions;
 using DotNetNuke.Entities.Users;
 using DotNetNuke.Security;
 using DotNetNuke.Services.Exceptions;
+using R7.Dnn.Extensions.ControlExtensions;
 using R7.Dnn.Extensions.Modules;
+using R7.Dnn.Extensions.Utilities;
 using R7.Dnn.UserHtml.Data;
 using R7.Dnn.UserHtml.Models;
 using R7.Dnn.UserHtml.ViewModels;
-using R7.Dnn.Extensions.Utilities;
 
 namespace R7.Dnn.UserHtml
 {
@@ -56,8 +57,45 @@ namespace R7.Dnn.UserHtml
         protected Panel pnlSelectUser;
         protected Panel pnlUserHtml;
         protected Label lblSearchResult;
+        protected LinkButton btnSearchUser;
 
         #endregion
+
+        #region Session-state properties
+
+        string _sessionSearchText;
+        protected string SessionSearchText {
+            get { return _sessionSearchText ?? (_sessionSearchText = (string) Session ["UserHtml_SearchText_" + TabModuleId]); }
+            set { Session ["UserHtml_SearchText_" + TabModuleId] = _sessionSearchText = value; }
+        }
+
+        int? _sessionUserId;
+        protected int? SessionUserId {
+            get { return _sessionUserId ?? (_sessionUserId = (int?) Session ["UserHtml_UserId_" + TabModuleId]); }
+            set { Session ["UserHtml_UserId_" + TabModuleId] = _sessionUserId = value; }
+        }
+
+        #endregion
+
+        void TryRestoreState ()
+        {
+            if (SessionSearchText != null) {
+                txtSearchUser.Text = SessionSearchText;
+                btnSearchUser_Click_Internal (txtSearchUser.Text, false);
+
+                if (SessionUserId != null) {
+                    var selectedIndex = selUser.FindIndexByValue (SessionUserId.Value, -1);
+                    if (selectedIndex >= 0) {
+                        selUser.SelectedIndex = selectedIndex;
+                        selUser_SelectedIndexChanged_Internal (SessionUserId);
+                    }
+                    else {
+                        txtSearchUser.Text = string.Empty;
+                        pnlSelectUser.Visible = false;
+                    }
+                }
+            }
+        }
 
         protected override void OnInit (EventArgs e)
         {
@@ -75,18 +113,21 @@ namespace R7.Dnn.UserHtml
 
             try {
                 if (!IsPostBack) {
+                    var showModule = false; 
                     // TODO: Add support for userid querystring parameter?
                     // TODO: Don't show content on profile page of different user.
                     if (Request.IsAuthenticated) {
                         if (!IsOnProfilePage () || IsOnOwnProfilePage ()) {
-                            ShowContent ();
-                            pnlUser.Visible = IsEditable;
+                            ShowMyContent ();
+                            showModule = true;
                         }
-                        else {
-                            HideModule ();
+                        if (IsEditable) {
+                            ShowEditPanel ();
+                            showModule = true;
                         }
                     }
-                    else {
+
+                    if (!showModule) {
                         HideModule ();
                     }
                 }
@@ -103,16 +144,27 @@ namespace R7.Dnn.UserHtml
 
         bool IsOnOwnProfilePage () => IsOnProfilePage () && GetUserProfileId ().Value == UserId;
 
-        void ShowContent ()
+        void ShowMyContent ()
+        {
+            ShowContent (UserId);
+        }
+
+        void ShowContent (int userId)
         {
             var dataProvider = new UserHtmlDataProvider ();
-            var userHtml = dataProvider.GetUserHtml (UserId, ModuleId);
+            var userHtml = dataProvider.GetUserHtml (userId, ModuleId);
             if (userHtml != null && !string.IsNullOrEmpty (userHtml.UserHtml)) {
                 litUserHtml.Text = HttpUtility.HtmlDecode (userHtml.UserHtml);
             }
             else {
                 litUserHtml.Text = HttpUtility.HtmlDecode (Settings.EmptyHtml);
             }
+        }
+
+        void ShowEditPanel ()
+        {
+            pnlUser.Visible = true;
+            TryRestoreState ();
         }
 
         void HideModule ()
@@ -145,15 +197,26 @@ namespace R7.Dnn.UserHtml
 
         protected void btnSearchUser_Click (object sender, EventArgs e)
         {
-            // TODO: Store search text and selected user in the session.
-            var users = SearchUsers (txtSearchUser.Text.Trim ());
+            var searchText = txtSearchUser.Text.Trim ();
+            btnSearchUser_Click_Internal (searchText, true);
+            SessionSearchText = searchText;
+        }
+
+        void btnSearchUser_Click_Internal (string searchText, bool selectFirst)
+        {
+            var users = SearchUsers (searchText);
             if (users != null && users.Any ()) {
                 pnlSelectUser.Visible = true;
                 lblSearchResult.Text = string.Format (LocalizeString ("UsersFound_Format.Text"), users.Count ());
                 selUser.DataSource = users.OrderBy (u => u.DisplayName)
-                                          .Select (u => new UserViewModel (u));
+                    .Select (u => new UserViewModel (u));
                 selUser.DataBind ();
-                selUser_SelectedIndexChanged (selUser, new EventArgs ());
+
+                if (selectFirst) {
+                    selUser.SelectedIndex = 0;
+                    var userId = TypeUtils.ParseToNullable<int> (selUser.SelectedValue, true);
+                    selUser_SelectedIndexChanged_Internal (userId);
+                }
             }
             else {
                 pnlSelectUser.Visible = false;
@@ -162,6 +225,7 @@ namespace R7.Dnn.UserHtml
         }
 
         // TODO: Move to BLL
+        // TODO: Rename to FindUsers
         // TODO: Also search by FirstName/LastName combinations
         IEnumerable<UserInfo> SearchUsers (string searchText)
         {
@@ -180,16 +244,22 @@ namespace R7.Dnn.UserHtml
 
         protected void selUser_SelectedIndexChanged (object sender, EventArgs e)
         {
-            var userId = int.Parse (selUser.SelectedValue);
-            lnkEditUserHtml.NavigateUrl = EditUrl ("user_id", userId.ToString (), "Edit");
+            var userId = TypeUtils.ParseToNullable<int> (selUser.SelectedValue, true);
+            selUser_SelectedIndexChanged_Internal (userId);
+            SessionUserId = userId;
+        }
 
-            var dataProvider = new UserHtmlDataProvider ();
-            var userHtml = dataProvider.GetUserHtml (userId, ModuleId);
-            if (userHtml != null) {
-                litUserHtml.Text = HttpUtility.HtmlDecode (userHtml.UserHtml);
+        void selUser_SelectedIndexChanged_Internal (int? userId)
+        {
+            if (userId != null) {
+                lnkEditUserHtml.Visible = true;
+                lnkEditUserHtml.NavigateUrl = EditUrl ("user_id", userId.ToString (), "Edit");
+
+                ShowContent (userId.Value);
             }
             else {
                 litUserHtml.Text = string.Empty;
+                lnkEditUserHtml.Visible = false;
             }
         }
     }
