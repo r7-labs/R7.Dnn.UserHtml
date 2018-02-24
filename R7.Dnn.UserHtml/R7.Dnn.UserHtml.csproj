@@ -113,6 +113,7 @@
     <Compile Include="Data\UserHtmlDataProvider.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="Components\UserFinder.cs" />
+    <Compile Include="Components\UserHtmlTokenReplace.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="module.css" />

@@ -31,6 +31,7 @@ using System.Web.UI.WebControls;
 using DotNetNuke.Entities.Icons;
 using DotNetNuke.Entities.Modules;
 using DotNetNuke.Entities.Modules.Actions;
+using DotNetNuke.Entities.Users;
 using DotNetNuke.Security;
 using DotNetNuke.Services.Exceptions;
 using R7.Dnn.Extensions.ControlExtensions;
@@ -150,13 +151,20 @@ namespace R7.Dnn.UserHtml
 
         void ShowContent (int userId)
         {
+            var user = userId != UserId ? UserController.Instance.GetUser (PortalId, userId) : UserInfo;
+
+            var tokenReplace = new UserHtmlTokenReplace (PortalSettings, user, ModuleId);
             var dataProvider = new UserHtmlDataProvider ();
             var userHtml = dataProvider.GetUserHtml (userId, ModuleId);
             if (userHtml != null && !string.IsNullOrEmpty (userHtml.UserHtml)) {
-                litUserHtml.Text = HttpUtility.HtmlDecode (userHtml.UserHtml);
+                litUserHtml.Text = HttpUtility.HtmlDecode (
+                    tokenReplace.ReplaceEnvironmentTokens (userHtml.UserHtml)
+                );
             }
             else {
-                litUserHtml.Text = HttpUtility.HtmlDecode (Settings.EmptyHtml);
+                litUserHtml.Text = HttpUtility.HtmlDecode (
+                    tokenReplace.ReplaceEnvironmentTokens (Settings.EmptyHtml)
+                );
             }
         }
 
