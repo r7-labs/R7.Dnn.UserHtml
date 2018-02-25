@@ -99,7 +99,6 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Components\UserHtmlController.cs" />
-    <Compile Include="Models\UserHtmlInfo.cs" />
     <Compile Include="Models\UserHtmlSettings.cs" />
     <Compile Include="ViewUserHtml.ascx.cs">
       <DependentUpon>ViewUserHtml.ascx</DependentUpon>
@@ -114,6 +113,10 @@
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="Components\UserFinder.cs" />
     <Compile Include="Components\UserHtmlTokenReplace.cs" />
+    <Compile Include="Models\CKEditorTemplateInfo.cs" />
+    <Compile Include="Models\CKEditorTemplatesRootInfo.cs" />
+    <Compile Include="Models\UserHtmlInfo.cs" />
+    <Compile Include="Data\CKEditorTemplateTokenDataSource.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="module.css" />

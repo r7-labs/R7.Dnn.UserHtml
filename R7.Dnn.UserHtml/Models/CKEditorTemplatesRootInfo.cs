@@ -1,5 +1,5 @@
 ﻿//
-// UserHtmlTokenReplace.cs
+// CKEditorTemplatesRootInfo.cs
 //
 // Author:
 //       Roman M. Yagodin <roman.yagodin@gmail.com>
@@ -24,31 +24,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Collections;
-using System.Globalization;
-using DotNetNuke.Entities.Portals;
-using DotNetNuke.Entities.Users;
-using DotNetNuke.Services.Tokens;
+using System.Collections.Generic;
+using System.Xml;
+using System.Xml.Serialization;
 
-namespace R7.Dnn.UserHtml.Components
+namespace R7.Dnn.UserHtml.Models
 {
-    public class UserHtmlTokenReplace: TokenReplace
+    [XmlRoot ("Templates")]
+    public class CKEditorTemplatesRootInfo
     {
-        public UserHtmlTokenReplace (PortalSettings portalSettings, UserInfo user, int moduleId):
-            base (Scope.DefaultSettings, CultureInfo.CurrentCulture.IetfLanguageTag, portalSettings, user, moduleId)
-        {
-            #if DEBUG
+        [XmlAttribute ("templateName")]
+        public string TemplateName { get; set; }
 
-            DebugMessages = true;
-
-            #endif
-        }
-
-        public string ReplaceCKEditorTemplateTokens (string sourceText, IDictionary templateTokens)
-        {
-            return ReplaceEnvironmentTokens (
-                ReplaceEnvironmentTokens (sourceText, templateTokens, "CKEditor")
-            );
-        }
+        [XmlElement ("Template")]
+        public List<CKEditorTemplateInfo> Templates { get; set; } = new List<CKEditorTemplateInfo> ();
     }
 }

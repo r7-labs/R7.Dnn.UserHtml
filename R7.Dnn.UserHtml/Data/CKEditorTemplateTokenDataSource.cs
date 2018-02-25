@@ -1,5 +1,5 @@
 ﻿//
-// UserHtmlTokenReplace.cs
+// CKEditorTemplateTokenDataSource.cs
 //
 // Author:
 //       Roman M. Yagodin <roman.yagodin@gmail.com>
@@ -24,31 +24,28 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Collections;
-using System.Globalization;
-using DotNetNuke.Entities.Portals;
-using DotNetNuke.Entities.Users;
-using DotNetNuke.Services.Tokens;
+using System.Collections.Generic;
+using System.IO;
+using System.Xml.Serialization;
+using R7.Dnn.UserHtml.Models;
 
-namespace R7.Dnn.UserHtml.Components
+namespace R7.Dnn.UserHtml.Data
 {
-    public class UserHtmlTokenReplace: TokenReplace
+    public class CKEditorTemplateTokenDataSource
     {
-        public UserHtmlTokenReplace (PortalSettings portalSettings, UserInfo user, int moduleId):
-            base (Scope.DefaultSettings, CultureInfo.CurrentCulture.IetfLanguageTag, portalSettings, user, moduleId)
+        public Dictionary<string, string> Templates { get; protected set; }
+
+        public CKEditorTemplateTokenDataSource (string templateFile)
         {
-            #if DEBUG
+            Templates = new Dictionary<string, string> ();
 
-            DebugMessages = true;
-
-            #endif
-        }
-
-        public string ReplaceCKEditorTemplateTokens (string sourceText, IDictionary templateTokens)
-        {
-            return ReplaceEnvironmentTokens (
-                ReplaceEnvironmentTokens (sourceText, templateTokens, "CKEditor")
-            );
+            using (var sr = new StreamReader (templateFile)) {
+                var serializer = new XmlSerializer (typeof (CKEditorTemplatesRootInfo));
+                var templatesRoot = (CKEditorTemplatesRootInfo)serializer.Deserialize (sr);
+                foreach (var template in templatesRoot.Templates) {
+                    Templates.Add (template.Title, template.Html);
+                }
+            }
         }
     }
 }
