@@ -33,4 +33,11 @@
     <data name="lblDefaultHtml.Help" xml:space="preserve">
         <value>Введите содержимое в формате HTML которое будет добавляться в окно редактора HTML при создании новых записей.</value>
     </data>
+	<data name="lblTemplatesFile.Text" xml:space="preserve">
+        <value>Файл шаблонов CKEditor:</value>
+    </data>
+    <data name="lblTemplatesFile.Help" xml:space="preserve">
+        <value>Выберите файл шаблонов CKEditor для замены меток вида [CKEditor:TemplateName].
+		Если оставить поле пустым, то поддержка меток шаблонов CKEditor будет отключена.</value>
+    </data>
 </root>

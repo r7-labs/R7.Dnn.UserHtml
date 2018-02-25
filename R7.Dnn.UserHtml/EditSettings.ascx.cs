@@ -29,6 +29,7 @@ using System.Web;
 using System.Web.UI.WebControls;
 using DotNetNuke.Entities.Modules;
 using DotNetNuke.Services.Exceptions;
+using DotNetNuke.Web.UI.WebControls;
 using R7.Dnn.Extensions.Modules;
 using R7.Dnn.UserHtml.Models;
 
@@ -40,6 +41,7 @@ namespace R7.Dnn.UserHtml
 
         protected TextBox txtEmptyHtml;
         protected TextBox txtDefaultHtml;
+        protected DnnFilePickerUploader fpuTemplatesFile;
 
         #endregion
 
@@ -52,6 +54,7 @@ namespace R7.Dnn.UserHtml
                 if (!IsPostBack) {
                     txtEmptyHtml.Text = HttpUtility.HtmlDecode (Settings.EmptyHtml);
                     txtDefaultHtml.Text = HttpUtility.HtmlDecode (Settings.DefaultHtml);
+                    fpuTemplatesFile.FileID = Settings.TemplatesFileId ?? 0;
                 }
             } catch (Exception ex) {
                 Exceptions.ProcessModuleLoadException (this, ex);
@@ -66,6 +69,7 @@ namespace R7.Dnn.UserHtml
             try {
                 Settings.EmptyHtml = HttpUtility.HtmlEncode (txtEmptyHtml.Text);
                 Settings.DefaultHtml = HttpUtility.HtmlEncode (txtDefaultHtml.Text);
+                Settings.TemplatesFileId = fpuTemplatesFile.FileID > 0 ? (int?) fpuTemplatesFile.FileID : null;
 
                 SettingsRepository.SaveSettings (ModuleConfiguration, Settings);
                 ModuleController.SynchronizeModule (ModuleId);

@@ -28,9 +28,6 @@ using DotNetNuke.Entities.Modules.Settings;
 
 namespace R7.Dnn.UserHtml.Models
 {
-    /// <summary>
-    /// Provides strong typed access to settings used by module
-    /// </summary>
     public class UserHtmlSettings
     {
         [ModuleSetting (Prefix = "UserHtml_")]
@@ -38,5 +35,8 @@ namespace R7.Dnn.UserHtml.Models
 
         [ModuleSetting (Prefix = "UserHtml_")]
         public string DefaultHtml { get; set; }
+
+        [ModuleSetting (Prefix = "UserHtml_")]
+        public int? TemplatesFileId { get; set; }
     }
 }

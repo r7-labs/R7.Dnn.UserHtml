@@ -33,4 +33,11 @@
     <data name="lblDefaultHtml.Help" xml:space="preserve">
         <value>Enter the content in HTML format that will be added to the HTML editor window when new records are created.</value>
     </data>
+	<data name="lblTemplatesFile.Text" xml:space="preserve">
+        <value>CKEditor Templates File:</value>
+    </data>
+	<data name="lblTemplatesFile.Help" xml:space="preserve">
+        <value>Specify CKEditor templates file to be used to replace [CKEditor:TemplateName] tokens.
+		Leaving this empty will disable CKEditor template tokens support.</value>
+    </data>
 </root>

@@ -25,7 +25,6 @@
 // THE SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI.WebControls;
@@ -154,9 +153,7 @@ namespace R7.Dnn.UserHtml
         {
             var user = userId != UserId ? UserController.Instance.GetUser (PortalId, userId) : UserInfo;
 
-            // TODO: Get templates file from settings
-            var tds = new CKEditorTemplateTokenDataSource ("C:\\Dotnetnuke804\\Portals\\0\\CKEditorTemplates_Default.xml");
-
+            var tds = new CKEditorTemplateTokenDataSource (Settings.TemplatesFileId);
             var tokenReplace = new UserHtmlTokenReplace (PortalSettings, user, ModuleId);
             var dataProvider = new UserHtmlDataProvider ();
             var userHtml = dataProvider.GetUserHtml (userId, ModuleId);
