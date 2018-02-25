@@ -1,5 +1,5 @@
 //
-// EditSettings.ascx.cs
+// EditUserHtmlSettings.ascx.cs
 //
 // Author:
 //       Roman M. Yagodin <roman.yagodin@gmail.com>

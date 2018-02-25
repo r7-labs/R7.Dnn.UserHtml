@@ -106,7 +106,7 @@
     <Compile Include="EditUserHtml.ascx.cs">
       <DependentUpon>EditUserHtml.ascx</DependentUpon>
     </Compile>
-    <Compile Include="EditSettings.ascx.cs">
+    <Compile Include="EditUserHtmlSettings.ascx.cs">
       <DependentUpon>EditUserHtmlSettings.ascx</DependentUpon>
     </Compile>
     <Compile Include="Data\UserHtmlDataProvider.cs" />
