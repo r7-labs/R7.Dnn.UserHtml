@@ -25,6 +25,7 @@
 // THE SOFTWARE.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI.WebControls;
@@ -34,7 +35,6 @@ using DotNetNuke.Entities.Modules.Actions;
 using DotNetNuke.Entities.Users;
 using DotNetNuke.Security;
 using DotNetNuke.Services.Exceptions;
-using R7.Dnn.Extensions.ControlExtensions;
 using R7.Dnn.Extensions.Modules;
 using R7.Dnn.Extensions.Utilities;
 using R7.Dnn.UserHtml.Components;
@@ -63,12 +63,6 @@ namespace R7.Dnn.UserHtml
 
         #region Session-state properties
 
-        string _sessionSearchText;
-        protected string SessionSearchText {
-            get { return _sessionSearchText ?? (_sessionSearchText = (string) Session ["UserHtml_SearchText_" + TabModuleId]); }
-            set { Session ["UserHtml_SearchText_" + TabModuleId] = _sessionSearchText = value; }
-        }
-
         int? _sessionUserId;
         protected int? SessionUserId {
             get { return _sessionUserId ?? (_sessionUserId = (int?) Session ["UserHtml_UserId_" + TabModuleId]); }
@@ -79,20 +73,15 @@ namespace R7.Dnn.UserHtml
 
         void TryRestoreState ()
         {
-            if (SessionSearchText != null) {
-                txtSearchUser.Text = SessionSearchText;
-                btnSearchUser_Click_Internal (txtSearchUser.Text, false);
-
-                if (SessionUserId != null) {
-                    var selectedIndex = selUser.FindIndexByValue (SessionUserId.Value, -1);
-                    if (selectedIndex >= 0) {
-                        selUser.SelectedIndex = selectedIndex;
-                        selUser_SelectedIndexChanged_Internal (SessionUserId);
-                    }
-                    else {
-                        txtSearchUser.Text = string.Empty;
-                        pnlSelectUser.Visible = false;
-                    }
+            if (SessionUserId != null) {
+                var user = UserController.Instance.GetUser (PortalId, SessionUserId.Value);
+                if (user != null) {
+                    pnlSelectUser.Visible = true;
+                    selUser.DataSource = new List<UserViewModel> {
+                        new UserViewModel (user)
+                    };
+                    selUser.DataBind ();
+                    selUser_SelectedIndexChanged_Internal (user.UserID);
                 }
             }
         }
@@ -207,7 +196,6 @@ namespace R7.Dnn.UserHtml
         {
             var searchText = txtSearchUser.Text.Trim ();
             btnSearchUser_Click_Internal (searchText, true);
-            SessionSearchText = searchText;
         }
 
         void btnSearchUser_Click_Internal (string searchText, bool selectFirst)

@@ -52,6 +52,16 @@ namespace R7.Dnn.UserHtml
 
         #endregion
 
+        #region Session-state properties
+
+        int? _sessionUserId;
+        protected int? SessionUserId {
+            get { return _sessionUserId ?? (_sessionUserId = (int?) Session ["UserHtml_UserId_" + TabModuleId]); }
+            set { Session ["UserHtml_UserId_" + TabModuleId] = _sessionUserId = value; }
+        }
+
+        #endregion
+
         #region Handlers
 
         /// <summary>
@@ -84,6 +94,7 @@ namespace R7.Dnn.UserHtml
 
             try {
                 var userId = GetUserId ();
+                SessionUserId = userId;
 
                 if (!IsPostBack) {
                     // load the data into the control the first time we hit this page
@@ -177,14 +188,13 @@ namespace R7.Dnn.UserHtml
 
                     if (isNewItem) {
                         dataProvider.Add (item);
+                        SessionUserId = item.UserId;
                     }
                     else {
                         dataProvider.Update (item);
                     }
 
                     ModuleController.SynchronizeModule (ModuleId);
-
-                    // TODO: Add support for returnurl?
                     Response.Redirect (Globals.NavigateURL (), true);
                 }
             }
