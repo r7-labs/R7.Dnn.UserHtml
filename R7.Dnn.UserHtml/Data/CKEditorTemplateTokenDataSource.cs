@@ -36,7 +36,7 @@ namespace R7.Dnn.UserHtml.Data
 {
     public class CKEditorTemplateTokenDataSource
     {
-        public IDictionary<string, string> Templates { get; protected set; }
+        public Dictionary<string, string> Templates { get; protected set; }
 
         public CKEditorTemplateTokenDataSource ()
         {
