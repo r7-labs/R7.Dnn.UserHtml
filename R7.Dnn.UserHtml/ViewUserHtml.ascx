@@ -11,8 +11,8 @@
 				</asp:LinkButton>
 			</div>
 		</div>
-        <asp:Label id="lblSearchResult" runat="server" CssClass="small" />
-	</asp:Panel>
+		<asp:Label id="lblSearchResult" runat="server" CssClass="small" />
+    </asp:Panel>
 	<asp:Panel id="pnlSelectUser" runat="server">
     	<div class="form-group">
             <label for="<%= selUser.ClientID %>"><%= LocalizeString ("lblUser.Text") %></label>
@@ -21,8 +21,8 @@
     			DataValueField="UserId"
     		    AutoPostBack="true"
     		    OnSelectedIndexChanged="selUser_SelectedIndexChanged" />
-    	</div>
-    	<div class="form-group">
+        </div>
+		<div class="form-group">
             <asp:HyperLink id="lnkEditUserHtml" runat="server" role="button" CssClass="btn btn-secondary">
                 <span class="fa fa-edit"></span> <%= LocalizeString ("lnkEditUserHtml.Text") %>
             </asp:HyperLink>

@@ -40,7 +40,7 @@
         <value>Редактировать HTML</value>
     </data>
 	<data name="UsersFound_Format.Text" xml:space="preserve">
-        <value>Найдено {0} пользователей.</value>
+        <value>Найдено {0} пользователей по запросу &quot;{1}&quot;.</value>
     </data>
 	<data name="NoUsersFound.Text" xml:space="preserve">
         <value>Пользователи не найдены.</value>

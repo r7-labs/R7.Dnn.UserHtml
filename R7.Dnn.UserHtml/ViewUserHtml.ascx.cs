@@ -215,7 +215,7 @@ namespace R7.Dnn.UserHtml
             var users = new UserFinder ().FindUsers (searchText, PortalId);
             if (users != null && users.Any ()) {
                 pnlSelectUser.Visible = true;
-                lblSearchResult.Text = string.Format (LocalizeString ("UsersFound_Format.Text"), users.Count ());
+                lblSearchResult.Text = string.Format (LocalizeString ("UsersFound_Format.Text"), users.Count (), searchText);
                 selUser.DataSource = users.OrderBy (u => u.DisplayName)
                     .Select (u => new UserViewModel (u));
                 selUser.DataBind ();

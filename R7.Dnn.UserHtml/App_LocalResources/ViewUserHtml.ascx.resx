@@ -40,7 +40,7 @@
         <value>Edit HTML</value>
     </data>
 	<data name="UsersFound_Format.Text" xml:space="preserve">
-        <value>Found {0} user(s).</value>
+        <value>Found {0} user(s) on request &quot;{1}&quot;.</value>
     </data>
 	<data name="NoUsersFound.Text" xml:space="preserve">
         <value>No users found.</value>
