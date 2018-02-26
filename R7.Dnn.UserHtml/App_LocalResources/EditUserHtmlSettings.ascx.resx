@@ -40,4 +40,12 @@
         <value>Specify CKEditor templates file to be used to replace [CKEditor:TemplateName] tokens.
 		Leaving this empty will disable CKEditor template tokens support.</value>
     </data>
+	<data name="lblRoles.Text" xml:space="preserve">
+        <value>Roles Filter:</value>
+    </data>
+    <data name="lblRoles.Help" xml:space="preserve">
+        <value>Comma-separated list of role names.
+		Only users assigned to the one or more specified roles will be shown in the search results.
+        If some of the specified roles doesn't exists, they will be ignored.</value>
+    </data>
 </root>

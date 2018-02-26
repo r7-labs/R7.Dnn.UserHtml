@@ -27,18 +27,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using DotNetNuke.Entities.Users;
+using DotNetNuke.Security.Roles;
 using R7.Dnn.Extensions.Utilities;
+using R7.Dnn.UserHtml.Models;
 
 namespace R7.Dnn.UserHtml.Components
 {
     public class UserFinder
     {
-        public IEnumerable<UserInfo> FindUsers (string searchText, int portalId)
+        // TODO: Allow to apply role/text filters separately
+        public IEnumerable<UserInfo> FindUsers (IEnumerable<int> roleIds, string searchText, int portalId)
         {
             var searchTextLC = searchText.ToLower ();
 
             return UserController.GetUsers (false, false, portalId)
                                  .Cast<UserInfo> ()
+                                 .Where (u => roleIds.IsNullOrEmpty () || IsInAnyRole (u, roleIds))
                                  .Where (u => Contains (u.Email, searchTextLC) ||
                                     Contains (u.Username, searchTextLC) ||
                                     Contains (u.DisplayName, searchTextLC) ||
@@ -48,6 +52,13 @@ namespace R7.Dnn.UserHtml.Components
                                               searchTextLC) ||
                                     Contains (TextUtils.FormatList (" ", u.LastName, u.FirstName),
                                               searchTextLC));
+        }
+
+        bool IsInAnyRole (UserInfo user, IEnumerable<int> roleIds)
+        {
+            return !RoleController.Instance.GetUserRoles (user, true)
+                                  .Join (roleIds, ur => ur.RoleID, roleId => roleId, (ur, roleId) => roleId)
+                                  .IsNullOrEmpty ();
         }
 
         bool Contains (string text, string searchTextLC)

@@ -71,6 +71,7 @@ namespace R7.Dnn.UserHtml
 
         #endregion
 
+        // TODO: Also apply role filters
         void TryRestoreState ()
         {
             if (SessionUserId != null) {
@@ -200,7 +201,7 @@ namespace R7.Dnn.UserHtml
 
         void btnSearchUser_Click_Internal (string searchText, bool selectFirst)
         {
-            var users = new UserFinder ().FindUsers (searchText, PortalId);
+            var users = new UserFinder ().FindUsers (Settings.RoleIds, searchText, PortalId);
             if (users != null && users.Any ()) {
                 pnlSelectUser.Visible = true;
                 lblSearchResult.Text = string.Format (LocalizeString ("UsersFound_Format.Text"), users.Count (), searchText);

@@ -117,6 +117,7 @@
     <Compile Include="Models\CKEditorTemplatesRootInfo.cs" />
     <Compile Include="Models\UserHtmlInfo.cs" />
     <Compile Include="Data\CKEditorTemplateTokenDataSource.cs" />
+    <Compile Include="Models\EnumerableExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="module.css" />
@@ -131,11 +132,11 @@
   <ItemGroup>
     <None Include="SqlDataProvider\00.01.00.SqlDataProvider" />
     <None Include="SqlDataProvider\Uninstall.SqlDataProvider" />
-    <None Include="App_LocalResources\ViewUserHtml.ascx.resx" />
     <None Include="App_LocalResources\ViewUserHtml.ascx.ru-RU.resx" />
     <None Include="App_LocalResources\EditUserHtml.ascx.resx" />
     <None Include="App_LocalResources\EditUserHtml.ascx.ru-RU.resx" />
     <None Include="App_LocalResources\EditUserHtmlSettings.ascx.resx" />
+    <None Include="App_LocalResources\ViewUserHtml.ascx.resx" />
     <None Include="App_LocalResources\EditUserHtmlSettings.ascx.ru-RU.resx" />
     <None Include="R7.Dnn.UserHtml.dnn" />
   </ItemGroup>

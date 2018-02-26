@@ -6,7 +6,11 @@
 <dnn:DnnCssInclude runat="server" FilePath="~/DesktopModules/R7.Dnn.UserHtml/R7.Dnn.UserHtml/admin.css" />
 <div class="dnnForm dnnClear">
     <h2 class="dnnFormSectionHead"><a href="#"><asp:Label runat="server" ResourceKey="GeneralSettings.Section" /></a></h2>
-    <fieldset>  
+    <fieldset> 
+		<div class="dnnFormItem">
+            <dnn:Label id="lblRoles" runat="server" ControlName="txtRoles" />
+            <asp:TextBox id="txtRoles" runat="server" />
+        </div>
         <div class="dnnFormItem">
 			<dnn:Label id="lblEmptyHtml" runat="server" ControlName="txtEmptyHtml" />
             <asp:TextBox id="txtEmptyHtml" runat="server" TextMode="MultiLine" />
