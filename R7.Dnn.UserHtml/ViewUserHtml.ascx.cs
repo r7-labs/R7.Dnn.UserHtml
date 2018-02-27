@@ -193,10 +193,10 @@ namespace R7.Dnn.UserHtml
         protected void btnSearchUser_Click (object sender, EventArgs e)
         {
             var searchText = txtSearchUser.Text.Trim ();
-            btnSearchUser_Click_Internal (searchText, true);
+            btnSearchUser_Click_Internal (searchText);
         }
 
-        void btnSearchUser_Click_Internal (string searchText, bool selectFirst)
+        void btnSearchUser_Click_Internal (string searchText)
         {
             var users = UserController.GetUsers (false, false, PortalId)
                                       .Cast<UserInfo> ()
@@ -209,12 +209,9 @@ namespace R7.Dnn.UserHtml
                 selUser.DataSource = users.OrderBy (u => u.DisplayName)
                     .Select (u => new UserViewModel (u));
                 selUser.DataBind ();
-
-                if (selectFirst) {
-                    selUser.SelectedIndex = 0;
-                    var userId = TypeUtils.ParseToNullable<int> (selUser.SelectedValue, true);
-                    selUser_SelectedIndexChanged_Internal (userId);
-                }
+                selUser.SelectedIndex = 0;
+                var userId = TypeUtils.ParseToNullable<int> (selUser.SelectedValue, true);
+                selUser_SelectedIndexChanged_Internal (userId);
             }
             else {
                 pnlSelectUser.Visible = false;
