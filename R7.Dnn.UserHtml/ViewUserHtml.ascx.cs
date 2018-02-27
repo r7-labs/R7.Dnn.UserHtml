@@ -79,7 +79,7 @@ namespace R7.Dnn.UserHtml
                     pnlSelectUser.Visible = true;
                     selUser.DataSource = users.Select (u => new UserViewModel (u));
                     selUser.DataBind ();
-                    selUser_SelectedIndexChanged_Internal (users [0].UserID);
+                    selUser_SelectedIndexChanged_Internal ();
                 }
             }
         }
@@ -210,8 +210,7 @@ namespace R7.Dnn.UserHtml
                     .Select (u => new UserViewModel (u));
                 selUser.DataBind ();
                 selUser.SelectedIndex = 0;
-                var userId = TypeUtils.ParseToNullable<int> (selUser.SelectedValue, true);
-                selUser_SelectedIndexChanged_Internal (userId);
+                selUser_SelectedIndexChanged_Internal ();
             }
             else {
                 pnlSelectUser.Visible = false;
@@ -221,13 +220,13 @@ namespace R7.Dnn.UserHtml
 
         protected void selUser_SelectedIndexChanged (object sender, EventArgs e)
         {
-            var userId = TypeUtils.ParseToNullable<int> (selUser.SelectedValue, true);
-            selUser_SelectedIndexChanged_Internal (userId);
-            SessionUserId = userId;
+            selUser_SelectedIndexChanged_Internal ();
+            SessionUserId = TypeUtils.ParseToNullable<int> (selUser.SelectedValue, true);;
         }
 
-        void selUser_SelectedIndexChanged_Internal (int? userId)
+        void selUser_SelectedIndexChanged_Internal ()
         {
+            var userId = TypeUtils.ParseToNullable<int> (selUser.SelectedValue, true);
             if (userId != null) {
                 lnkEditUserHtml.Visible = true;
                 lnkEditUserHtml.NavigateUrl = EditUrl ("user_id", userId.ToString (), "Edit");
