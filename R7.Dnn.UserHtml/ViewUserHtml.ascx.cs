@@ -71,18 +71,15 @@ namespace R7.Dnn.UserHtml
 
         #endregion
 
-        // TODO: Also apply role filters
         void TryRestoreState ()
         {
             if (SessionUserId != null) {
-                var user = UserController.Instance.GetUser (PortalId, SessionUserId.Value);
-                if (user != null) {
+                var users = new List<UserInfo> { UserController.Instance.GetUser (PortalId, SessionUserId.Value) };
+                if (!users.WhereRoleIsAnyOf (Settings.RoleIds).IsNullOrEmpty ()) {
                     pnlSelectUser.Visible = true;
-                    selUser.DataSource = new List<UserViewModel> {
-                        new UserViewModel (user)
-                    };
+                    selUser.DataSource = users.Select (u => new UserViewModel (u));
                     selUser.DataBind ();
-                    selUser_SelectedIndexChanged_Internal (user.UserID);
+                    selUser_SelectedIndexChanged_Internal (users [0].UserID);
                 }
             }
         }
