@@ -203,7 +203,7 @@ namespace R7.Dnn.UserHtml
                                       .WhereRoleIsAnyOf (Settings.RoleIds)
                                       .WhereNameContains (searchText);
 
-            if (users != null && users.Any ()) {
+            if (!users.IsNullOrEmpty ()) {
                 pnlSelectUser.Visible = true;
                 lblSearchResult.Text = string.Format (LocalizeString ("UsersFound_Format.Text"), users.Count (), searchText);
                 selUser.DataSource = users.OrderBy (u => u.DisplayName)
