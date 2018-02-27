@@ -75,7 +75,7 @@ namespace R7.Dnn.UserHtml
         {
             if (SessionUserId != null) {
                 var users = new List<UserInfo> { UserController.Instance.GetUser (PortalId, SessionUserId.Value) };
-                if (!users.WhereRoleIsAnyOf (Settings.RoleIds).IsNullOrEmpty ()) {
+                if (!users.WhereRoleIsAny (Settings.RoleIds, true).IsNullOrEmpty ()) {
                     pnlSelectUser.Visible = true;
                     selUser.DataSource = users.Select (u => new UserViewModel (u));
                     selUser.DataBind ();
@@ -200,7 +200,7 @@ namespace R7.Dnn.UserHtml
         {
             var users = UserController.GetUsers (false, false, PortalId)
                                       .Cast<UserInfo> ()
-                                      .WhereRoleIsAnyOf (Settings.RoleIds)
+                                      .WhereRoleIsAny (Settings.RoleIds, true)
                                       .WhereNameContains (searchText);
 
             if (!users.IsNullOrEmpty ()) {

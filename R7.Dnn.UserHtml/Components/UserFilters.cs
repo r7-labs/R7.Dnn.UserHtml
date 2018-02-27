@@ -50,13 +50,17 @@ namespace R7.Dnn.UserHtml.Components
                                       searchTextLC));
         }
 
-        public static IEnumerable<UserInfo> WhereRoleIsAnyOf (this IEnumerable<UserInfo> users, IEnumerable<int> roleIds)
+        public static IEnumerable<UserInfo> WhereRoleIsAny (this IEnumerable<UserInfo> users, IEnumerable<int> roleIds, bool defaultAll)
         {
-            return users.Where (u => roleIds.IsNullOrEmpty () || IsInAnyRole (u, roleIds));
+            return users.Where (u => IsInAnyRole (u, roleIds, defaultAll));
         }
 
-        static bool IsInAnyRole (UserInfo user, IEnumerable<int> roleIds)
+        static bool IsInAnyRole (UserInfo user, IEnumerable<int> roleIds, bool defaultAll)
         {
+            if (roleIds.IsNullOrEmpty ()) {
+                return defaultAll;
+            }
+
             return !RoleController.Instance.GetUserRoles (user, true)
                                   .Join (roleIds, ur => ur.RoleID, roleId => roleId, (ur, roleId) => roleId)
                                   .IsNullOrEmpty ();
