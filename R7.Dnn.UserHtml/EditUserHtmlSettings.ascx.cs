@@ -42,6 +42,7 @@ namespace R7.Dnn.UserHtml
     {
         #region Controls
 
+        protected Panel pnlGeneralSettings;
         protected TextBox txtEmptyHtml;
         protected TextBox txtDefaultHtml;
         protected TextBox txtRoles;
@@ -49,9 +50,17 @@ namespace R7.Dnn.UserHtml
 
         #endregion
 
-        /// <summary>
-        /// Handles the loading of the module setting for this control
-        /// </summary>
+        protected override void OnInit (EventArgs e)
+        {
+            base.OnInit (e);
+
+            if (pnlGeneralSettings != null) {
+                pnlGeneralSettings.Visible = UserInfo.IsSuperUser || UserInfo.IsInRole ("Administrators");
+            }
+        }
+
+        #region ModuleSettingsBase overrides
+
         public override void LoadSettings ()
         {
             try {
@@ -70,9 +79,6 @@ namespace R7.Dnn.UserHtml
             }
         }
 
-        /// <summary>
-        /// Handles updating the module settings for this control
-        /// </summary>
         public override void UpdateSettings ()
         {
             try {
@@ -91,6 +97,8 @@ namespace R7.Dnn.UserHtml
                 Exceptions.ProcessModuleLoadException (this, ex);
             }
         }
+
+        #endregion
 
         IEnumerable<string> ParseRoleIdsStringToRoleNames (string roleIds, int portalId)
         {

@@ -4,7 +4,7 @@
 <%@ Register TagPrefix="dnn" Namespace="DotNetNuke.Web.UI.WebControls" Assembly="DotNetNuke.Web" %>
 <%@ Register TagPrefix="dnn" Namespace="DotNetNuke.Web.Client.ClientResourceManagement" Assembly="DotNetNuke.Web.Client" %>
 <dnn:DnnCssInclude runat="server" FilePath="~/DesktopModules/R7.Dnn.UserHtml/R7.Dnn.UserHtml/admin.css" />
-<div class="dnnForm dnnClear">
+<asp:Panel id="pnlGeneralSettings" runat="server" CssClass="dnnForm dnnClear">
     <h2 class="dnnFormSectionHead"><a href="#"><asp:Label runat="server" ResourceKey="GeneralSettings.Section" /></a></h2>
     <fieldset> 
 		<div class="dnnFormItem">
@@ -24,4 +24,4 @@
 			<dnn:Picker id="fpuTemplatesFile" runat="server" />
         </div>
     </fieldset> 
-</div>
+</asp:Panel>
