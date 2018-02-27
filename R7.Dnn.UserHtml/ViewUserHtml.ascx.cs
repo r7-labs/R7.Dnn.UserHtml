@@ -139,20 +139,21 @@ namespace R7.Dnn.UserHtml
         void ShowContent (int userId)
         {
             var user = userId != UserId ? UserController.Instance.GetUser (PortalId, userId) : UserInfo;
-
-            var tds = new CKEditorTemplateTokenDataSource (Settings.TemplatesFileId);
-            var tokenReplace = new UserHtmlTokenReplace (PortalSettings, user, ModuleId);
-            var dataProvider = new UserHtmlDataProvider ();
-            var userHtml = dataProvider.GetUserHtml (userId, ModuleId);
-            if (userHtml != null && !string.IsNullOrEmpty (userHtml.UserHtml)) {
-                litUserHtml.Text = HttpUtility.HtmlDecode (
-                    tokenReplace.ReplaceCKEditorTemplateTokens (userHtml.UserHtml, tds.Templates)
-                );
-            }
-            else {
-                litUserHtml.Text = HttpUtility.HtmlDecode (
-                    tokenReplace.ReplaceCKEditorTemplateTokens (Settings.EmptyHtml, tds.Templates)
-                );
+            if (user.IsInAnyRole (Settings.RoleIds, true)) {
+                var tds = new CKEditorTemplateTokenDataSource (Settings.TemplatesFileId);
+                var tokenReplace = new UserHtmlTokenReplace (PortalSettings, user, ModuleId);
+                var dataProvider = new UserHtmlDataProvider ();
+                var userHtml = dataProvider.GetUserHtml (userId, ModuleId);
+                if (userHtml != null && !string.IsNullOrEmpty (userHtml.UserHtml)) {
+                    litUserHtml.Text = HttpUtility.HtmlDecode (
+                        tokenReplace.ReplaceCKEditorTemplateTokens (userHtml.UserHtml, tds.Templates)
+                    );
+                }
+                else {
+                    litUserHtml.Text = HttpUtility.HtmlDecode (
+                        tokenReplace.ReplaceCKEditorTemplateTokens (Settings.EmptyHtml, tds.Templates)
+                    );
+                }
             }
         }
 
