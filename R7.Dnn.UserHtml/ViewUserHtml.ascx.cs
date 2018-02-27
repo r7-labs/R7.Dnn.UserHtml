@@ -104,12 +104,12 @@ namespace R7.Dnn.UserHtml
                     // TODO: Add support for userid querystring parameter?
                     // TODO: Don't show content on profile page of different user.
                     if (Request.IsAuthenticated) {
-                        if (!IsOnProfilePage () || IsOnOwnProfilePage ()) {
-                            ShowMyContent ();
-                            showModule = true;
-                        }
                         if (IsEditable) {
                             ShowEditPanel ();
+                            showModule = true;
+                        }
+                        else if (!IsOnProfilePage () || IsOnOwnProfilePage ()) {
+                            ShowMyContent ();
                             showModule = true;
                         }
                     }
