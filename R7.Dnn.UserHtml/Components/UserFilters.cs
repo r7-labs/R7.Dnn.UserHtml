@@ -52,10 +52,10 @@ namespace R7.Dnn.UserHtml.Components
 
         public static IEnumerable<UserInfo> WhereRoleIsAny (this IEnumerable<UserInfo> users, IEnumerable<int> roleIds, bool defaultAll)
         {
-            return users.Where (u => IsInAnyRole (u, roleIds, defaultAll));
+            return users.Where (u => u.IsInAnyRole (roleIds, defaultAll));
         }
 
-        static bool IsInAnyRole (UserInfo user, IEnumerable<int> roleIds, bool defaultAll)
+        public static bool IsInAnyRole (this UserInfo user, IEnumerable<int> roleIds, bool defaultAll)
         {
             if (roleIds.IsNullOrEmpty ()) {
                 return defaultAll;

@@ -74,10 +74,10 @@ namespace R7.Dnn.UserHtml
         void TryRestoreState ()
         {
             if (SessionUserId != null) {
-                var users = new List<UserInfo> { UserController.Instance.GetUser (PortalId, SessionUserId.Value) };
-                if (!users.WhereRoleIsAny (Settings.RoleIds, true).IsNullOrEmpty ()) {
+                var user = UserController.Instance.GetUser (PortalId, SessionUserId.Value);
+                if (user.IsInAnyRole (Settings.RoleIds, true)) {
                     pnlSelectUser.Visible = true;
-                    selUser.DataSource = users.Select (u => new UserViewModel (u));
+                    selUser.DataSource = new List<UserViewModel> { new UserViewModel (user) };
                     selUser.DataBind ();
                     selUser_SelectedIndexChanged_Internal ();
                 }
