@@ -111,7 +111,7 @@
     </Compile>
     <Compile Include="Data\UserHtmlDataProvider.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
-    <Compile Include="Components\UserFinder.cs" />
+    <Compile Include="Components\UserFilters.cs" />
     <Compile Include="Components\UserHtmlTokenReplace.cs" />
     <Compile Include="Models\CKEditorTemplateInfo.cs" />
     <Compile Include="Models\CKEditorTemplatesRootInfo.cs" />

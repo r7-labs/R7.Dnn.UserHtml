@@ -201,7 +201,11 @@ namespace R7.Dnn.UserHtml
 
         void btnSearchUser_Click_Internal (string searchText, bool selectFirst)
         {
-            var users = new UserFinder ().FindUsers (Settings.RoleIds, searchText, PortalId);
+            var users = UserController.GetUsers (false, false, PortalId)
+                                      .Cast<UserInfo> ()
+                                      .WhereRoleIsAnyOf (Settings.RoleIds)
+                                      .WhereNameContains (searchText);
+
             if (users != null && users.Any ()) {
                 pnlSelectUser.Visible = true;
                 lblSearchResult.Text = string.Format (LocalizeString ("UsersFound_Format.Text"), users.Count (), searchText);

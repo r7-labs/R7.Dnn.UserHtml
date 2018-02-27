@@ -1,5 +1,5 @@
 ﻿//
-// UserFinder.cs
+// UserFilters.cs
 //
 // Author:
 //       Roman M. Yagodin <roman.yagodin@gmail.com>
@@ -33,35 +33,36 @@ using R7.Dnn.UserHtml.Models;
 
 namespace R7.Dnn.UserHtml.Components
 {
-    public class UserFinder
+    public static class UserFilters
     {
-        // TODO: Allow to apply role/text filters separately
-        public IEnumerable<UserInfo> FindUsers (IEnumerable<int> roleIds, string searchText, int portalId)
+        public static IEnumerable<UserInfo> WhereNameContains (this IEnumerable<UserInfo> users, string searchText)
         {
             var searchTextLC = searchText.ToLower ();
 
-            return UserController.GetUsers (false, false, portalId)
-                                 .Cast<UserInfo> ()
-                                 .Where (u => roleIds.IsNullOrEmpty () || IsInAnyRole (u, roleIds))
-                                 .Where (u => Contains (u.Email, searchTextLC) ||
-                                    Contains (u.Username, searchTextLC) ||
-                                    Contains (u.DisplayName, searchTextLC) ||
-                                    Contains (u.LastName, searchTextLC) ||
-                                    Contains (u.FirstName, searchTextLC) ||
-                                    Contains (TextUtils.FormatList (" ", u.FirstName, u.LastName),
-                                              searchTextLC) ||
-                                    Contains (TextUtils.FormatList (" ", u.LastName, u.FirstName),
-                                              searchTextLC));
+            return users.Where (u => Contains (u.Email, searchTextLC) ||
+                                Contains (u.Username, searchTextLC) ||
+                                Contains (u.DisplayName, searchTextLC) ||
+                                Contains (u.LastName, searchTextLC) ||
+                                Contains (u.FirstName, searchTextLC) ||
+                                Contains (TextUtils.FormatList (" ", u.FirstName, u.LastName),
+                                          searchTextLC) ||
+                                Contains (TextUtils.FormatList (" ", u.LastName, u.FirstName),
+                                      searchTextLC));
         }
 
-        bool IsInAnyRole (UserInfo user, IEnumerable<int> roleIds)
+        public static IEnumerable<UserInfo> WhereRoleIsAnyOf (this IEnumerable<UserInfo> users, IEnumerable<int> roleIds)
+        {
+            return users.Where (u => roleIds.IsNullOrEmpty () || IsInAnyRole (u, roleIds));
+        }
+
+        static bool IsInAnyRole (UserInfo user, IEnumerable<int> roleIds)
         {
             return !RoleController.Instance.GetUserRoles (user, true)
                                   .Join (roleIds, ur => ur.RoleID, roleId => roleId, (ur, roleId) => roleId)
                                   .IsNullOrEmpty ();
         }
 
-        bool Contains (string text, string searchTextLC)
+        static bool Contains (string text, string searchTextLC)
         {
             return text != null && text.ToLower ().Contains (searchTextLC);
         }
