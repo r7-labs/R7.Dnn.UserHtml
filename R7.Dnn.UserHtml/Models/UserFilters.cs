@@ -29,9 +29,8 @@ using System.Linq;
 using DotNetNuke.Entities.Users;
 using DotNetNuke.Security.Roles;
 using R7.Dnn.Extensions.Utilities;
-using R7.Dnn.UserHtml.Models;
 
-namespace R7.Dnn.UserHtml.Components
+namespace R7.Dnn.UserHtml.Models
 {
     public static class UserFilters
     {
