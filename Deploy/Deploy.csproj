@@ -75,6 +75,10 @@
       <Project>{9B60E0C8-106B-46D0-9747-20573C8538F8}</Project>
       <Name>R7.Dnn.UserHtml</Name>
     </ProjectReference>
+    <ProjectReference Include="..\R7.Dnn.UserHtml.Tests\R7.Dnn.UserHtml.Tests.csproj">
+      <Project>{D35864B6-23BE-42D1-A289-0ECCA9597C6D}</Project>
+      <Name>R7.Dnn.UserHtml.Tests</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets" Condition="Exists('..\packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets')" />
