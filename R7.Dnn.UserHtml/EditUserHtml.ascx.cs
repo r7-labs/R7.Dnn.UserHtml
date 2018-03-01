@@ -35,6 +35,7 @@ using DotNetNuke.Services.Exceptions;
 using DotNetNuke.UI.UserControls;
 using R7.Dnn.Extensions.Modules;
 using R7.Dnn.Extensions.Utilities;
+using R7.Dnn.UserHtml.Components;
 using R7.Dnn.UserHtml.Data;
 using R7.Dnn.UserHtml.Models;
 
@@ -173,8 +174,7 @@ namespace R7.Dnn.UserHtml
                         item = new UserHtmlInfo ();
                     }
 
-                    // fill the object
-                    item.UserHtml = textUserHtml.Text;
+                    item.UserHtml = HtmlStripper.StripTags (textUserHtml.Text, true, Settings.StripTags, ",;");
                     item.ModuleId = ModuleId;
                     item.UserId = userId.Value;
 

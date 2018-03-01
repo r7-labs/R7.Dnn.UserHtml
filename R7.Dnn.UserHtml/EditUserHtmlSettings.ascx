@@ -19,6 +19,10 @@
             <dnn:Label id="lblDefaultHtml" runat="server" ControlName="txtDefaultHtml" />
             <asp:TextBox id="txtDefaultHtml" runat="server" TextMode="MultiLine" Rows="20" />
         </div>
+		<div class="dnnFormItem">
+            <dnn:Label id="lblStripTags" runat="server" ControlName="txtStripTags" />
+            <asp:TextBox id="txtStripTags" runat="server" />
+        </div>
         <div class="dnnFormItem">
             <dnn:Label id="lblTemplatesFile" runat="server" ControlName="fpuTemplatesFile" />
 			<dnn:Picker id="fpuTemplatesFile" runat="server" />

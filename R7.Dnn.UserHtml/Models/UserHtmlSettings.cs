@@ -43,6 +43,9 @@ namespace R7.Dnn.UserHtml.Models
         public int? TemplatesFileId { get; set; }
 
         [ModuleSetting (Prefix = "UserHtml_")]
+        public string StripTags { get; set; }
+
+        [ModuleSetting (Prefix = "UserHtml_")]
         public string Roles { get; set; }
 
         public IEnumerable<int> RoleIds =>

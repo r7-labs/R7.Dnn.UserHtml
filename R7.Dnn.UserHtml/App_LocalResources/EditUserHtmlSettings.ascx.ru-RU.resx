@@ -48,4 +48,10 @@
 		В результатах поиска будут отображаться только пользователи, которым назначена одна или несколько из указанных ролей.
         Если каких-либо из указанных ролей не существует, они будут проигнорированы.</value>
     </data>
+	<data name="lblStripTags.Text" xml:space="preserve">
+        <value>Удалить теги HTML:</value>
+    </data>
+    <data name="lblStripTags.Help" xml:space="preserve">
+        <value>Введите список тегов HTML через запятую, которые нужно удалить из кода HTML.</value>
+    </data>
 </root>

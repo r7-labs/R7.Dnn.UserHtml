@@ -41,6 +41,7 @@ using R7.Dnn.UserHtml.Components;
 using R7.Dnn.UserHtml.Data;
 using R7.Dnn.UserHtml.Models;
 using R7.Dnn.UserHtml.ViewModels;
+using System.Runtime.Remoting.Messaging;
 
 namespace R7.Dnn.UserHtml
 {
@@ -140,21 +141,25 @@ namespace R7.Dnn.UserHtml
         {
             var user = userId != UserId ? UserController.Instance.GetUser (PortalId, userId) : UserInfo;
             if (user.IsInAnyRole (Settings.RoleIds, true)) {
-                var tds = new CKEditorTemplateTokenDataSource (Settings.TemplatesFileId);
-                var tokenReplace = new UserHtmlTokenReplace (PortalSettings, user, ModuleId);
                 var dataProvider = new UserHtmlDataProvider ();
                 var userHtml = dataProvider.GetUserHtml (userId, ModuleId);
-                if (userHtml != null && !string.IsNullOrEmpty (userHtml.UserHtml)) {
-                    litUserHtml.Text = HttpUtility.HtmlDecode (
-                        tokenReplace.ReplaceCKEditorTemplateTokens (userHtml.UserHtml, tds.Templates)
-                    );
-                }
-                else {
-                    litUserHtml.Text = HttpUtility.HtmlDecode (
-                        tokenReplace.ReplaceCKEditorTemplateTokens (Settings.EmptyHtml, tds.Templates)
-                    );
-                }
+                litUserHtml.Text = ProcessUserHtml (user,
+                    (userHtml != null && !string.IsNullOrEmpty (userHtml.UserHtml))
+                        ? userHtml.UserHtml
+                        : Settings.EmptyHtml
+                );
             }
+        }
+
+        string ProcessUserHtml (UserInfo user, string html)
+        {
+            var tds = new CKEditorTemplateTokenDataSource (Settings.TemplatesFileId);
+            var tokenReplace = new UserHtmlTokenReplace (PortalSettings, user, ModuleId);
+
+            return HtmlStripper.StripTags (
+                HttpUtility.HtmlDecode (tokenReplace.ReplaceCKEditorTemplateTokens (html, tds.Templates)),
+                false, Settings.StripTags, ",;"
+            );
         }
 
         void ShowEditPanel ()

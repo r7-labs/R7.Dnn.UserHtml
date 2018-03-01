@@ -48,4 +48,10 @@
 		Only users assigned to the one or more specified roles will be shown in the search results.
         If some of the specified roles doesn't exists, they will be ignored.</value>
     </data>
+	<data name="lblStripTags.Text" xml:space="preserve">
+        <value>Strip HTML Tags:</value>
+    </data>
+	<data name="lblStripTags.Help" xml:space="preserve">
+        <value>Enter comma-separated list of HTML tags to strip from HTML code.</value>
+    </data>
 </root>

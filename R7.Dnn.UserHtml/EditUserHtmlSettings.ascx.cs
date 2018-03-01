@@ -46,6 +46,7 @@ namespace R7.Dnn.UserHtml
         protected TextBox txtEmptyHtml;
         protected TextBox txtDefaultHtml;
         protected TextBox txtRoles;
+        protected TextBox txtStripTags;
         protected DnnFilePickerUploader fpuTemplatesFile;
 
         #endregion
@@ -67,6 +68,7 @@ namespace R7.Dnn.UserHtml
                 if (!IsPostBack) {
                     txtEmptyHtml.Text = HttpUtility.HtmlDecode (Settings.EmptyHtml);
                     txtDefaultHtml.Text = HttpUtility.HtmlDecode (Settings.DefaultHtml);
+                    txtStripTags.Text = Settings.StripTags;
                     fpuTemplatesFile.FileID = Settings.TemplatesFileId ?? 0;
                     txtRoles.Text = string.Join (
                         ", ",
@@ -84,10 +86,11 @@ namespace R7.Dnn.UserHtml
             try {
                 Settings.EmptyHtml = HttpUtility.HtmlEncode (txtEmptyHtml.Text);
                 Settings.DefaultHtml = HttpUtility.HtmlEncode (txtDefaultHtml.Text);
+                Settings.StripTags = txtStripTags.Text.Trim ();
                 Settings.TemplatesFileId = fpuTemplatesFile.FileID > 0 ? (int?) fpuTemplatesFile.FileID : null;
                 Settings.Roles = string.Join (
                     ";",
-                    ParseRoleNamesStringToRoleIds (txtRoles.Text, PortalId)
+                    ParseRoleNamesStringToRoleIds (txtRoles.Text.Trim (), PortalId)
                         .Select (roleId => roleId.ToString ())
                 );
 
