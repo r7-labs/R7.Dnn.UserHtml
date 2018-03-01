@@ -34,7 +34,7 @@ namespace R7.Dnn.UserHtml.Models
 {
     public static class UserFilters
     {
-        public static IEnumerable<UserInfo> WhereNameContains (this IEnumerable<UserInfo> users, string searchText)
+        public static IEnumerable<UserInfoNameAdapter> WhereNameContains (this IEnumerable<UserInfoNameAdapter> users, string searchText)
         {
             var searchTextLC = searchText.ToLower ();
 

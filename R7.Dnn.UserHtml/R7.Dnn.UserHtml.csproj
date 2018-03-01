@@ -118,6 +118,7 @@
     <Compile Include="Data\CKEditorTemplateTokenDataSource.cs" />
     <Compile Include="Models\EnumerableExtensions.cs" />
     <Compile Include="Models\UserFilters.cs" />
+    <Compile Include="Models\UserInfoNameAdapter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="module.css" />

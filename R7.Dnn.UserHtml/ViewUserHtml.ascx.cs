@@ -202,7 +202,9 @@ namespace R7.Dnn.UserHtml
             var users = UserController.GetUsers (false, false, PortalId)
                                       .Cast<UserInfo> ()
                                       .WhereRoleIsAny (Settings.RoleIds, true)
-                                      .WhereNameContains (searchText);
+                                      .Select (u => new UserInfoNameAdapter (u))
+                                      .WhereNameContains (searchText)
+                                      .Select (una => una.User);
 
             if (!users.IsNullOrEmpty ()) {
                 pnlSelectUser.Visible = true;
