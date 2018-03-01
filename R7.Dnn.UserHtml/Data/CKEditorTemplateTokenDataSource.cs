@@ -45,25 +45,33 @@ namespace R7.Dnn.UserHtml.Data
 
         public CKEditorTemplateTokenDataSource (int? templatesFileId): this ()
         {
-            if (templatesFileId != null) {
-                var templatesFile = FileManager.Instance.GetFile (templatesFileId.Value);
-                if (templatesFile != null) {
-                    ReadTemplates (templatesFile.PhysicalPath, Templates);
+            try {
+                if (templatesFileId != null) {
+                    var templatesFile = FileManager.Instance.GetFile (templatesFileId.Value);
+                    if (templatesFile != null) {
+                        ReadTemplates (templatesFile.PhysicalPath, Templates);
+                    }
+                    else {
+                        throw new FileNotFoundException ($"Cannot find templates file with FileId={templatesFileId.Value}");
+                    }
                 }
-                else {
-                    Exceptions.LogException (
-                        new Exception ($"Cannot find templates file with FileId={templatesFileId.Value}")
-                    );
-                }
+            }
+            catch (Exception ex) {
+                Exceptions.LogException (ex);
             }
         }
 
         public CKEditorTemplateTokenDataSource (string templatesFile): this ()
         {
-            ReadTemplates (templatesFile, Templates);
+            try {
+                ReadTemplates (templatesFile, Templates);
+            }
+            catch (Exception ex) {
+                Exceptions.LogException (ex);
+            }
         }
 
-        void ReadTemplates (string templatesFile, IDictionary<string, string> templates)
+        public void ReadTemplates (string templatesFile, IDictionary<string, string> templates)
         {
             var sr = default (StreamReader);
             try {
@@ -76,10 +84,8 @@ namespace R7.Dnn.UserHtml.Data
                 }
             }
             catch (Exception ex) {
-                Exceptions.LogException (
-                    new Exception ($"Error reading the {templatesFile} templates file.", ex)
-                ); 
                 templates.Clear ();
+                throw new Exception ($"Error reading the {templatesFile} templates file.", ex);
             }
             finally {
                 if (sr != null)  {
