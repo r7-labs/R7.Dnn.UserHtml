@@ -84,7 +84,6 @@ namespace R7.Dnn.UserHtml.Data
                 }
             }
             catch (Exception ex) {
-                Templates.Clear ();
                 throw new Exception ($"Error reading the {templatesFile} templates file.", ex);
             }
             finally {
