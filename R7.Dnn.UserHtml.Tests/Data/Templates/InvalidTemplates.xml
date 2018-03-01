@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Templates imagesPath="/DotNetNuke/Portals/0/images" nameOfTemplate="default">
+    <Template name="Template1">
+        <Description>Template1 Description.</Description>
+        <Content>
+            <![CDATA[<p>Template1 Content.</p>]]>
+        </Content>
+    </Template>
+    <Template name="Template2">
+        <Description>Template2 Description.</Description>
+        <Content>
+            <![CDATA[<p>Template2 Content.</p>]]>
+        </Content>
+    </Template>
+</Templates>

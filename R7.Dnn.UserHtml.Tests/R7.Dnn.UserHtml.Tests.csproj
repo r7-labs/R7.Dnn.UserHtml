@@ -41,7 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\UserFiltersTests.cs" />
-    <Compile Include="Tests.cs" />
+    <Compile Include="Data\CKEditorTemplateTokenDataSourceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\R7.Dnn.UserHtml\R7.Dnn.UserHtml.csproj">
@@ -51,9 +51,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Data\Templates\BrokenTemplates.xml" />
+    <None Include="Data\Templates\InvalidTemplates.xml" />
+    <None Include="Data\Templates\ValidTemplates.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
+    <Folder Include="Data\" />
+    <Folder Include="Data\Templates\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
