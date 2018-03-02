@@ -8,6 +8,7 @@
     <RootNamespace>R7.Dnn.UserHtml</RootNamespace>
     <AssemblyName>R7.Dnn.UserHtml</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <ReleaseVersion>1.0</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -132,7 +133,7 @@
     <Content Include="releaseNotes.htm" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="SqlDataProvider\00.01.00.SqlDataProvider" />
+    <None Include="SqlDataProvider\01.00.00.SqlDataProvider" />
     <None Include="SqlDataProvider\Uninstall.SqlDataProvider" />
     <None Include="App_LocalResources\ViewUserHtml.ascx.ru-RU.resx" />
     <None Include="App_LocalResources\EditUserHtml.ascx.resx" />
