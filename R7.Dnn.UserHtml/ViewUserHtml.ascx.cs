@@ -34,6 +34,7 @@ using DotNetNuke.Entities.Modules;
 using DotNetNuke.Entities.Modules.Actions;
 using DotNetNuke.Entities.Users;
 using DotNetNuke.Security;
+using DotNetNuke.Security.Permissions;
 using DotNetNuke.Services.Exceptions;
 using R7.Dnn.Extensions.Modules;
 using R7.Dnn.Extensions.Utilities;
@@ -41,7 +42,6 @@ using R7.Dnn.UserHtml.Components;
 using R7.Dnn.UserHtml.Data;
 using R7.Dnn.UserHtml.Models;
 using R7.Dnn.UserHtml.ViewModels;
-using System.Runtime.Remoting.Messaging;
 
 namespace R7.Dnn.UserHtml
 {
@@ -105,7 +105,7 @@ namespace R7.Dnn.UserHtml
                     // TODO: Add support for userid querystring parameter?
                     // TODO: Don't show content on profile page of different user.
                     if (Request.IsAuthenticated) {
-                        if (IsEditable) {
+                        if (ModulePermissionController.CanEditModuleContent (ModuleConfiguration)) {
                             ShowEditPanel ();
                             showModule = true;
                         }
