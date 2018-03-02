@@ -141,7 +141,7 @@ namespace R7.Dnn.UserHtml
         {
             var tds = new CKEditorTemplateTokenDataSource (Settings.TemplatesFileId);
             var tokenReplace = new UserHtmlTokenReplace (PortalSettings, UserInfo, ModuleId);
-            textUserHtml.Text = tokenReplace.ReplaceCKEditorTemplateTokens (Settings.DefaultHtml, tds.Templates);
+            textUserHtml.Text = tokenReplace.ReplaceCKEditorTemplateTokens (Settings.DefaultHtml, tds.Templates, 2, false);
 
             buttonDelete.Visible = false;
             ctlAudit.Visible = false;
