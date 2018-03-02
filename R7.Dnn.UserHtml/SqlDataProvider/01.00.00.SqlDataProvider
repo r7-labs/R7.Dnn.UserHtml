@@ -21,8 +21,5 @@ BEGIN
             REFERENCES {databaseOwner}[{objectQualifier}Users] (UserID) ON DELETE CASCADE,
         CONSTRAINT [UN_{objectQualifier}r7_UserHtmls] UNIQUE (ModuleID, UserID)
     )
-
-    -- CREATE NONCLUSTERED INDEX [IX_{objectQualifier}r7_UserHtmls]
-    --     ON {databaseOwner}[{objectQualifier}r7_UserHtmls] (ModuleID, UserID)
 END
 GO

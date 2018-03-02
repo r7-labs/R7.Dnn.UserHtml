@@ -5,6 +5,4 @@
 ALTER TABLE {databaseOwner}[{objectQualifier}r7_UserHtmls] 
     DROP CONSTRAINT [FK_{objectQualifier}r7_UserHtmls]
 
---  DROP INDEX {databaseOwner}[{objectQualifier}r7_UserHtmls].[IX_{objectQualifier}r7_UserHtmls]
-
 DROP TABLE {databaseOwner}[{objectQualifier}r7_UserHtmls]
