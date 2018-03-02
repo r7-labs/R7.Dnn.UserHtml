@@ -25,7 +25,7 @@
                         <supportedFeatures />
                         <moduleDefinitions>
                             <moduleDefinition>
-                                <friendlyName>User HTML</friendlyName>
+                                <friendlyName>R7.Dnn.UserHtml</friendlyName>
                                 <definitionName>R7_Dnn_UserHtml</definitionName>
                                 <defaultCacheTime>0</defaultCacheTime>
                                 <moduleControls>
