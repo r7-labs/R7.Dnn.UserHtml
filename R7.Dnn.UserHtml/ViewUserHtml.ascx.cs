@@ -157,7 +157,7 @@ namespace R7.Dnn.UserHtml
             var tokenReplace = new UserHtmlTokenReplace (PortalSettings, user, ModuleId);
 
             return HtmlStripper.StripTags (
-                HttpUtility.HtmlDecode (tokenReplace.ReplaceCKEditorTemplateTokens (html, tds.Templates)),
+                HttpUtility.HtmlDecode (tokenReplace.ReplaceEnvironmentTokens (tokenReplace.ReplaceCKEditorTemplateTokens (html, tds.Templates))),
                 false, Settings.StripTags, ",;"
             );
         }

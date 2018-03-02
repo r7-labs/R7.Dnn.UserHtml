@@ -46,9 +46,7 @@ namespace R7.Dnn.UserHtml.Components
 
         public string ReplaceCKEditorTemplateTokens (string sourceText, IDictionary templateTokens)
         {
-            return ReplaceEnvironmentTokens (
-                ReplaceEnvironmentTokens (sourceText, templateTokens, "CKEditor")
-            );
+            return ReplaceEnvironmentTokens (sourceText, templateTokens, "CKEditor");
         }
     }
 }
