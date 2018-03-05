@@ -101,7 +101,6 @@ namespace R7.Dnn.UserHtml
                     // load the data into the control the first time we hit this page
 
                     // check we have an item to lookup
-                    // ALT: if (!Null.IsNull (itemId) 
                     if (userId != null) {
                         // load the item
                         var dataProvider = new UserHtmlDataProvider ();
@@ -116,7 +115,7 @@ namespace R7.Dnn.UserHtml
                             ctlAudit.CreatedDate = item.CreatedOnDate.ToLongDateString ();
                         }
                         else {
-                            LoadNewItem ();
+                            LoadNewItem (userId.Value);
                         }
 
                         var user = UserController.GetUserById (PortalId, userId.Value);
@@ -124,11 +123,11 @@ namespace R7.Dnn.UserHtml
                             AppendToPageTitle (user.DisplayName);
                         }
                         else {
-                            throw (new Exception ($"User with UserId={userId.Value} doesn't exists"));
+                            throw (new Exception ($"User with UserId={userId.Value} doesn't exists."));
                         }
                     }
                     else {
-                        LoadNewItem ();
+                        throw (new Exception ("Expected \"user_id\" parameter in a querystring."));
                     }
                 }
             }
@@ -137,14 +136,20 @@ namespace R7.Dnn.UserHtml
             }
         }
 
-        void LoadNewItem ()
+        void LoadNewItem (int userId)
         {
             var tds = new CKEditorTemplateTokenDataSource (Settings.TemplatesFileId);
-            var tokenReplace = new UserHtmlTokenReplace (PortalSettings, UserInfo, ModuleId);
-            textUserHtml.Text = tokenReplace.ReplaceCKEditorTemplateTokens (Settings.DefaultHtml, tds.Templates, 2, false);
+            var user = UserController.Instance.GetUser (PortalId, userId);
+            if (user != null) {
+                var tokenReplace = new UserHtmlTokenReplace (PortalSettings, user, ModuleId);
+                textUserHtml.Text = tokenReplace.ReplaceCKEditorTemplateTokens (Settings.DefaultHtml, tds.Templates, 2, false);
 
-            buttonDelete.Visible = false;
-            ctlAudit.Visible = false;
+                buttonDelete.Visible = false;
+                ctlAudit.Visible = false;
+            }
+            else {
+                throw (new Exception ($"User with UserId={userId} doesn't exists."));
+            }
         }
 
         void AppendToPageTitle (string addition)
