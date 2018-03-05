@@ -76,7 +76,7 @@ namespace R7.Dnn.UserHtml
         {
             if (SessionUserId != null) {
                 var user = UserController.Instance.GetUser (PortalId, SessionUserId.Value);
-                if (user.IsInAnyRole (Settings.RoleIds, true)) {
+                if (user != null && user.IsInAnyRole (Settings.RoleIds, true)) {
                     pnlSelectUser.Visible = true;
                     selUser.DataSource = new List<UserViewModel> { new UserViewModel (user) };
                     selUser.DataBind ();
