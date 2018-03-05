@@ -110,7 +110,7 @@ namespace R7.Dnn.UserHtml
                             textUserHtml.Text = item.UserHtml;
 
                             // setup audit control
-                            ctlAudit.CreatedByUser = UserController.Instance.GetUserById (PortalId, item.CreatedByUserId)?.DisplayName
+                            ctlAudit.CreatedByUser = UserController.Instance.GetUser (PortalId, item.CreatedByUserId)?.DisplayName
                                 ?? LocalizeString ("UnknownUser.Text");
                             ctlAudit.CreatedDate = item.CreatedOnDate.ToLongDateString ();
                         }
@@ -118,7 +118,7 @@ namespace R7.Dnn.UserHtml
                             LoadNewItem (userId.Value);
                         }
 
-                        var user = UserController.GetUserById (PortalId, userId.Value);
+                        var user = UserController.Instance.GetUser (PortalId, userId.Value);
                         if (user != null) {
                             AppendToPageTitle (user.DisplayName);
                         }
