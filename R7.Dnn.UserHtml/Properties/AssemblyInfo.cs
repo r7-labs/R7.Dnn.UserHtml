@@ -7,9 +7,9 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyTitle ("R7.Dnn.UserHtml")]
 [assembly: AssemblyDescription ("")]
 [assembly: AssemblyConfiguration ("")]
-[assembly: AssemblyCompany ("R7.Labs")]
+[assembly: AssemblyCompany ("Volgograd State Agricultural University")]
 [assembly: AssemblyProduct ("")]
-[assembly: AssemblyCopyright ("Roman M. Yagodin")]
+[assembly: AssemblyCopyright ("Volgograd State Agricultural University")]
 [assembly: AssemblyTrademark ("")]
 [assembly: AssemblyCulture ("")]
 
@@ -18,7 +18,7 @@ using System.Runtime.CompilerServices;
 // and "{Major}.{Minor}.{Build}.*" will update just the revision.
 
 [assembly: AssemblyVersion ("1.0.0.*")]
-[assembly: AssemblyInformationalVersion ("1.0.0-beta.2")]
+[assembly: AssemblyInformationalVersion ("1.0.0")]
 
 // The following attributes are used to specify the signing key for the assembly, 
 // if desired. See the Mono documentation for more information about signing.

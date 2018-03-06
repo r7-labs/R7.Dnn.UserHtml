@@ -5,10 +5,10 @@
             <friendlyName>R7.Dnn.UserHtml</friendlyName>
             <description>A module to display HTML content associated with a specific user.</description>
             <owner>
-                <name>Roman M. Yagodin</name>
-                <organization>R7.Labs</organization>
+                <name>VolSAU</name>
+                <organization>Volgograd State Agricultural University</organization>
                 <url>https://github.com/volgau/R7.Dnn.UserHtml</url>
-                <email>roman.yagodin@gmail.com</email>
+                <email />
             </owner>
             <license src="license.htm" />
             <releaseNotes src="releaseNotes.htm" />
