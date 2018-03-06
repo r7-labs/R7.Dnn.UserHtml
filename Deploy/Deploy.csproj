@@ -69,9 +69,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dummy.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\R7.Dnn.UserHtml\R7.Dnn.UserHtml.csproj">
       <Project>{9B60E0C8-106B-46D0-9747-20573C8538F8}</Project>
       <Name>R7.Dnn.UserHtml</Name>
