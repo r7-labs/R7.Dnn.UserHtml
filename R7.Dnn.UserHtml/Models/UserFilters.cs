@@ -4,7 +4,7 @@
 // Author:
 //       Roman M. Yagodin <roman.yagodin@gmail.com>
 //
-// Copyright (c) 2018 Roman M. Yagodin
+// Copyright (c) 2018-2019 Roman M. Yagodin
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DotNetNuke.Entities.Users;
 using DotNetNuke.Security.Roles;
-using R7.Dnn.Extensions.Utilities;
+using R7.Dnn.Extensions.Text;
 
 namespace R7.Dnn.UserHtml.Models
 {
@@ -43,9 +43,9 @@ namespace R7.Dnn.UserHtml.Models
                                 Contains (u.DisplayName, searchTextLC) ||
                                 Contains (u.LastName, searchTextLC) ||
                                 Contains (u.FirstName, searchTextLC) ||
-                                Contains (TextUtils.FormatList (" ", u.FirstName, u.LastName),
+                                Contains (FormatHelper.JoinNotNullOrEmpty (" ", u.FirstName, u.LastName),
                                           searchTextLC) ||
-                                Contains (TextUtils.FormatList (" ", u.LastName, u.FirstName),
+                                Contains (FormatHelper.JoinNotNullOrEmpty (" ", u.LastName, u.FirstName),
                                       searchTextLC));
         }
 

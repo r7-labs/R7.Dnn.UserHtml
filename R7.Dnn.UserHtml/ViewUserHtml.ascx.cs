@@ -4,7 +4,7 @@
 // Author:
 //       Roman M. Yagodin <roman.yagodin@gmail.com>
 //
-// Copyright (c) 2018 Roman M. Yagodin
+// Copyright (c) 2018-2019 Roman M. Yagodin
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -37,7 +37,7 @@ using DotNetNuke.Security;
 using DotNetNuke.Security.Permissions;
 using DotNetNuke.Services.Exceptions;
 using R7.Dnn.Extensions.Modules;
-using R7.Dnn.Extensions.Utilities;
+using R7.Dnn.Extensions.Text;
 using R7.Dnn.UserHtml.Components;
 using R7.Dnn.UserHtml.Data;
 using R7.Dnn.UserHtml.Models;
@@ -125,7 +125,7 @@ namespace R7.Dnn.UserHtml
             }
         }
 
-        int? GetUserProfileId () => TypeUtils.ParseToNullable<int> (Request.QueryString ["userid"]);
+        int? GetUserProfileId () => ParseHelper.ParseToNullable<int> (Request.QueryString ["userid"]);
 
         // TODO: Use profile page from portal settings?
         bool IsOnProfilePage () => GetUserProfileId () != null;
@@ -229,12 +229,12 @@ namespace R7.Dnn.UserHtml
         protected void selUser_SelectedIndexChanged (object sender, EventArgs e)
         {
             selUser_SelectedIndexChanged_Internal ();
-            SessionUserId = TypeUtils.ParseToNullable<int> (selUser.SelectedValue, true);;
+            SessionUserId = ParseHelper.ParseToNullable<int> (selUser.SelectedValue, true);;
         }
 
         void selUser_SelectedIndexChanged_Internal ()
         {
-            var userId = TypeUtils.ParseToNullable<int> (selUser.SelectedValue, true);
+            var userId = ParseHelper.ParseToNullable<int> (selUser.SelectedValue, true);
             if (userId != null) {
                 lnkEditUserHtml.Visible = true;
                 lnkEditUserHtml.NavigateUrl = EditUrl ("user_id", userId.ToString (), "Edit");

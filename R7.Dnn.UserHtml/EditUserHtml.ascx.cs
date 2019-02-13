@@ -4,7 +4,7 @@
 // Author:
 //       Roman M. Yagodin <roman.yagodin@gmail.com>
 //
-// Copyright (c) 2018 Roman M. Yagodin
+// Copyright (c) 2018-2019 Roman M. Yagodin
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -34,7 +34,7 @@ using DotNetNuke.Framework;
 using DotNetNuke.Services.Exceptions;
 using DotNetNuke.UI.UserControls;
 using R7.Dnn.Extensions.Modules;
-using R7.Dnn.Extensions.Utilities;
+using R7.Dnn.Extensions.Text;
 using R7.Dnn.UserHtml.Components;
 using R7.Dnn.UserHtml.Data;
 using R7.Dnn.UserHtml.Models;
@@ -82,7 +82,7 @@ namespace R7.Dnn.UserHtml
 
         int? GetUserId ()
         {
-            return TypeUtils.ParseToNullable<int> (Request.QueryString ["user_id"]);
+            return ParseHelper.ParseToNullable<int> (Request.QueryString ["user_id"]);
         }
 
         /// <summary>
